@@ -1,0 +1,390 @@
+/* =============================================
+   HEARTZ LINK - Homepage Styles
+   ============================================= */
+
+/* --- Reset & Base --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #beb191;
+    font-family: 'Cormorant Garamond', serif;
+    overflow: hidden;
+}
+
+/* --- Parchment Texture Overlays --- */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    background:
+        radial-gradient(ellipse at 20% 50%, rgba(139, 119, 80, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(139, 119, 80, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 60% 80%, rgba(100, 80, 50, 0.10) 0%, transparent 50%),
+        radial-gradient(ellipse at 10% 90%, rgba(80, 60, 30, 0.08)  0%, transparent 40%),
+        radial-gradient(ellipse at 90% 70%, rgba(80, 60, 30, 0.08)  0%, transparent 40%);
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(74, 47, 24, 0.15) 100%);
+}
+
+.texture-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(74, 47, 24, 0.02) 2px,
+            rgba(74, 47, 24, 0.02) 4px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 3px,
+            rgba(74, 47, 24, 0.015) 3px,
+            rgba(74, 47, 24, 0.015) 6px
+        );
+}
+
+/* --- Stain Spots --- */
+.stain {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.stain-1 {
+    width: 300px;
+    height: 250px;
+    top: 5%;
+    right: 10%;
+    background: radial-gradient(ellipse, rgba(160, 130, 80, 0.08) 0%, transparent 70%);
+    transform: rotate(15deg);
+}
+
+.stain-2 {
+    width: 200px;
+    height: 200px;
+    bottom: 15%;
+    left: 8%;
+    background: radial-gradient(ellipse, rgba(120, 95, 55, 0.06) 0%, transparent 70%);
+    transform: rotate(-25deg);
+}
+
+.stain-3 {
+    width: 400px;
+    height: 350px;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(10deg);
+    background: radial-gradient(ellipse, rgba(180, 155, 100, 0.05) 0%, transparent 60%);
+}
+
+/* --- Main Container --- */
+.container {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 3rem 2rem;
+    max-width: 680px;
+    width: 100%;
+    opacity: 0;
+    animation: fadeInPage 1s ease-out 0.2s forwards;
+}
+
+/* --- Divider --- */
+.divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.5rem auto;
+    max-width: 400px;
+}
+
+.divider-bottom {
+    margin-top: 2.5rem;
+}
+
+.divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #4a2f18, transparent);
+    opacity: 0.4;
+}
+
+.divider-diamond {
+    width: 8px;
+    height: 8px;
+    background-color: #cc9f38;
+    transform: rotate(45deg);
+    flex-shrink: 0;
+    opacity: 0.7;
+}
+
+/* --- Title Section --- */
+.title-section {
+    margin-bottom: 1rem;
+}
+
+.main-title {
+    font-family: 'Cinzel Decorative', 'Cinzel', serif;
+    font-size: 3.8rem;
+    font-weight: 900;
+    color: #4a2f18;
+    letter-spacing: 0.08em;
+    line-height: 1.1;
+    text-shadow:
+        0 1px 0 rgba(190, 177, 145, 0.8),
+        0 2px 4px rgba(74, 47, 24, 0.1);
+    margin-bottom: 0.3rem;
+}
+
+.title-heart {
+    color: #cc9f38;
+    display: inline-block;
+    position: relative;
+}
+
+.subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #4a2f18;
+    opacity: 0.6;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+}
+
+/* --- Emblem --- */
+.emblem {
+    margin: 2rem auto 2.5rem;
+    position: relative;
+    width: 60px;
+    height: 60px;
+}
+
+.emblem svg {
+    width: 60px;
+    height: 60px;
+    opacity: 0.5;
+    animation: flicker 4s ease-in-out infinite;
+}
+
+/* --- Navigation Grid --- */
+.nav-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+/* --- Navigation Buttons --- */
+.nav-btn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1.2rem 1rem;
+    background: linear-gradient(
+        135deg,
+        rgba(190, 177, 145, 0.6) 0%,
+        rgba(200, 188, 158, 0.4) 50%,
+        rgba(190, 177, 145, 0.6) 100%
+    );
+    border: 1.5px solid rgba(74, 47, 24, 0.2);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #4a2f18;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow:
+        0 1px 3px rgba(74, 47, 24, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeInButton 0.5s ease-out forwards;
+}
+
+.nav-btn:nth-child(1) { animation-delay: 0.4s; }
+.nav-btn:nth-child(2) { animation-delay: 0.5s; }
+.nav-btn:nth-child(3) { animation-delay: 0.6s; }
+.nav-btn:nth-child(4) { animation-delay: 0.7s; }
+.nav-btn:nth-child(5) { animation-delay: 0.8s; }
+.nav-btn:nth-child(6) { animation-delay: 0.9s; }
+
+.nav-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 3px;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        transparent 50%,
+        rgba(74, 47, 24, 0.03) 100%
+    );
+    pointer-events: none;
+}
+
+.nav-btn:hover {
+    border-color: rgba(204, 159, 56, 0.6);
+    background: linear-gradient(
+        135deg,
+        rgba(204, 159, 56, 0.15) 0%,
+        rgba(204, 159, 56, 0.08) 50%,
+        rgba(204, 159, 56, 0.15) 100%
+    );
+    box-shadow:
+        0 2px 8px rgba(74, 47, 24, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.nav-btn:active {
+    transform: translateY(0px);
+    box-shadow:
+        0 1px 2px rgba(74, 47, 24, 0.1),
+        inset 0 1px 3px rgba(74, 47, 24, 0.1);
+}
+
+.nav-btn:hover .btn-icon {
+    color: #cc9f38;
+    transform: scale(1.1);
+}
+
+.nav-btn:focus-visible {
+    outline: 2px solid #cc9f38;
+    outline-offset: 2px;
+}
+
+.btn-icon {
+    font-size: 1.4rem;
+    color: #4a2f18;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    line-height: 1;
+}
+
+.btn-label {
+    position: relative;
+    z-index: 1;
+}
+
+/* --- Footer --- */
+.footer-note {
+    margin-top: 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: #4a2f18;
+    opacity: 0.35;
+    letter-spacing: 0.05em;
+}
+
+/* --- Animations --- */
+@keyframes fadeInPage {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInButton {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes flicker {
+    0%, 100% { opacity: 0.5; }
+    50%      { opacity: 0.45; }
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+    .main-title {
+        font-size: 2.6rem;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+        letter-spacing: 0.25em;
+    }
+
+    .nav-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+    }
+
+    .container {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .main-title {
+        font-size: 2.2rem;
+    }
+
+    .nav-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.6rem;
+    }
+
+    .nav-btn {
+        padding: 1rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}

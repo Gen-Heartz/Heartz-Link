@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heartz Link - Monster Book</title>
+    <link rel="stylesheet" href="MonsterBook.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="texture-overlay"></div>
+    <div class="stain stain-1"></div>
+    <div class="stain stain-2"></div>
+
+    <!-- Header -->
+    <header class="top-bar">
+        <button class="back-btn" id="backBtn" aria-label="Back to Bestiary">
+            <span class="back-icon">&#8592;</span>
+            <span class="back-label">Bestiary</span>
+        </button>
+        <h1 class="top-title">Monster Book</h1>
+        <div class="top-spacer"></div>
+    </header>
+
+    <!-- Book container -->
+    <main class="book-wrapper" id="bookWrapper">
+
+        <!-- Empty state -->
+        <div class="empty-state" id="emptyState">
+            <div class="empty-icon">&#x1F4D5;</div>
+            <p class="empty-title">No Creatures Catalogued</p>
+            <p class="empty-desc">Create your first monster to begin filling the bestiary.</p>
+            <button class="action-btn" id="goCreateBtn">
+                <span>&#x2728;</span> Create Monster
+            </button>
+        </div>
+
+        <!-- Book (desktop) -->
+        <div class="book" id="book" style="display:none;">
+            <div class="book-spine"></div>
+
+            <div class="book-page book-page-left" id="pageLeft">
+                <div class="page-number page-number-left" id="pageNumLeft">1</div>
+                <div class="page-content" id="pageContentLeft"></div>
+            </div>
+
+            <div class="book-page book-page-right" id="pageRight">
+                <div class="page-number page-number-right" id="pageNumRight">2</div>
+                <div class="page-content" id="pageContentRight"></div>
+            </div>
+
+            <button class="page-turn page-turn-prev" id="prevPage" aria-label="Previous page">
+                <span>&#10094;</span>
+            </button>
+            <button class="page-turn page-turn-next" id="nextPage" aria-label="Next page">
+                <span>&#10095;</span>
+            </button>
+        </div>
+
+        <div class="page-indicator" id="pageIndicator" style="display:none;">
+            <span id="currentSpread">1–2</span> of <span id="totalPages">0</span>
+        </div>
+
+    </main>
+
+    <!-- Detail Modal -->
+    <div class="modal-overlay" id="monsterModal">
+        <div class="modal-content">
+            <!-- action buttons top-right -->
+            <div class="modal-header-actions">
+                <button class="modal-edit-btn" id="modalEditBtn"
+                        aria-label="Edit monster">&#9998;</button>
+                <button class="modal-close"    id="modalClose"
+                        aria-label="Close">&#10005;</button>
+            </div>
+
+            <div class="modal-scroll">
+                <div class="modal-image-wrapper" id="modalImageWrapper">
+                    <div class="modal-image-placeholder">No Image</div>
+                </div>
+                <h2 class="modal-name"  id="modalName">—</h2>
+                <p  class="modal-alias" id="modalAlias"></p>
+                <div class="modal-divider"></div>
+
+                <div class="modal-section">
+                    <h3>Region</h3><p id="modalRegion">—</p>
+                </div>
+                <div class="modal-section">
+                    <h3>Diet</h3><p id="modalDiet">—</p>
+                </div>
+                <div class="modal-section">
+                    <h3>Appearance</h3><p id="modalAppearance">—</p>
+                </div>
+                <div class="modal-section">
+                    <h3>Classification Points</h3>
+                    <div class="stats-grid" id="modalStats"></div>
+                </div>
+                <div class="modal-section">
+                    <h3>Elemental Attributes</h3>
+                    <div class="elements-grid" id="modalElements"></div>
+                </div>
+                <div class="modal-section">
+                    <h3>Extractable Items</h3>
+                    <div class="loot-list" id="modalLoot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="MonsterBook.js"></script>
+</body>
+</html>

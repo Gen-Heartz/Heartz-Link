@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heartz Link – Monsters by Region</title>
+    <link rel="stylesheet" href="MonstersByRegion.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- parchment layers -->
+    <div class="texture-overlay"></div>
+    <div class="stain stain-1"></div>
+    <div class="stain stain-2"></div>
+
+    <!-- ═══════════════════════════════════════
+         HEADER
+    ═══════════════════════════════════════ -->
+    <header class="top-bar">
+        <button class="back-btn" id="backBtn" type="button">
+            <span class="back-icon">&#8592;</span>
+            <span>Bestiary</span>
+        </button>
+        <h1 class="top-title">Monsters by Region</h1>
+        <div style="width:110px;flex-shrink:0;"></div>
+    </header>
+
+    <!-- ═══════════════════════════════════════
+         MODE TABS
+    ═══════════════════════════════════════ -->
+    <div class="mode-tabs">
+        <button class="mode-tab active" data-mode="organize" type="button">
+            &#9881; Organization
+        </button>
+        <button class="mode-tab" data-mode="explore" type="button">
+            &#x1F9ED; Exploration
+        </button>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         MAIN PANELS WRAPPER
+    ═══════════════════════════════════════ -->
+    <main class="panels-wrap">
+
+        <!-- ════════════════════════════════════
+             ORGANIZATION PANEL
+        ════════════════════════════════════ -->
+        <section class="panel" id="panelOrganize">
+
+            <!-- ── Create region ── -->
+            <div class="org-card">
+                <h2 class="org-card-title">Regions</h2>
+
+                <div class="create-region-row">
+                    <div class="region-img-pick" id="regionImgPick" title="Set region image">
+                        <span id="regionImgIcon">&#x1F304;</span>
+                        <img id="regionImgPreview" src="" alt="" style="display:none;">
+                    </div>
+                    <input type="file" id="regionImgInput" accept="image/*" hidden>
+
+                    <input type="text" id="newRegionName" class="field-input"
+                           placeholder="New region name…">
+                    <button type="button" class="btn-gold" id="createRegionBtn">+ Add</button>
+                </div>
+
+                <div class="region-list" id="regionList"></div>
+            </div>
+
+            <!-- ── Region editor (appears when a region is selected) ── -->
+            <div class="org-card region-editor" id="regionEditor" style="display:none;">
+
+                <div class="editor-header">
+                    <h2 class="org-card-title" id="editorRegionName">—</h2>
+                    <button type="button" class="icon-btn" id="closeEditorBtn"
+                            aria-label="Close editor">&#10005;</button>
+                </div>
+
+                <!-- ── Sub-area manager ── -->
+                <div class="sub-section">
+                    <h3 class="sub-title">Sub-Areas</h3>
+                    <div class="sub-area-create-row">
+                        <input type="text" id="newSubAreaName" class="field-input"
+                               placeholder="Sub-area name…">
+                        <button type="button" class="btn-gold" id="addSubAreaBtn">
+                            + Add Sub-Area
+                        </button>
+                    </div>
+                    <div class="sub-area-list" id="subAreaList"></div>
+                </div>
+
+                <!-- ── Assign monster ── -->
+                <div class="sub-section">
+                    <h3 class="sub-title">Assign Monster</h3>
+
+                    <!-- searchable monster picker -->
+                    <div class="search-drop-wrap">
+                        <input type="text" class="field-input" id="assignMonsterSearch"
+                               placeholder="Search monsters…" autocomplete="off">
+                        <div class="search-dropdown" id="assignMonsterDrop"></div>
+                    </div>
+
+                    <div class="assign-config" id="assignConfig" style="display:none;">
+                        <p class="assign-config-name" id="assignConfigName">—</p>
+
+                        <!-- chance sliders -->
+                        <div class="chance-row">
+                            <label class="chance-lbl">
+                                &#9728; Day&nbsp;%
+                                <input type="number" class="chance-inp" id="assignDay"
+                                       min="0" max="100" value="50">
+                            </label>
+                            <label class="chance-lbl">
+                                &#9790; Night&nbsp;%
+                                <input type="number" class="chance-inp" id="assignNight"
+                                       min="0" max="100" value="50">
+                            </label>
+                        </div>
+
+                        <!-- sub-area checkboxes + scaling -->
+                        <div class="sub-area-assign-wrap" id="subAreaAssignWrap">
+                            <p class="hint-text">
+                                Sub-areas (assign &amp; set attribute scale %)
+                            </p>
+                            <div id="subAreaCheckList"></div>
+                        </div>
+
+                        <button type="button" class="btn-gold" id="confirmAssignBtn"
+                                style="margin-top:.8rem;">
+                            &#10003; Assign Monster
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ── Assigned monsters table ── -->
+                <div class="sub-section">
+                    <h3 class="sub-title">Assigned Monsters</h3>
+                    <div id="assignedList"></div>
+                </div>
+
+            </div><!-- /region-editor -->
+        </section>
+
+        <!-- ════════════════════════════════════
+             EXPLORATION PANEL
+        ════════════════════════════════════ -->
+        <section class="panel" id="panelExplore" style="display:none;">
+
+            <!-- ── Controls bar ── -->
+            <div class="explore-controls-bar">
+
+                <div class="control-group">
+                    <label class="control-label">Region</label>
+                    <div class="search-drop-wrap">
+                        <input type="text" class="field-input" id="exploreRegionSearch"
+                               placeholder="Search regions…" autocomplete="off">
+                        <div class="search-dropdown" id="exploreRegionDrop"></div>
+                    </div>
+                </div>
+
+                <div class="control-group" id="subAreaControlGroup" style="display:none;">
+                    <label class="control-label">Sub-Area</label>
+                    <select class="field-select" id="exploreSubAreaSelect">
+                        <option value="">— All sub-areas —</option>
+                    </select>
+                </div>
+
+                <!-- Day / Night toggle -->
+                <div class="control-group">
+                    <label class="control-label">Time</label>
+                    <div class="day-night-toggle" id="dayNightToggle" role="switch"
+                         aria-checked="false" tabindex="0" title="Toggle Day / Night">
+                        <span class="dn-icon day-icon">&#9728;</span>
+                        <span class="dn-track"><span class="dn-thumb"></span></span>
+                        <span class="dn-icon night-icon">&#9790;</span>
+                    </div>
+                </div>
+
+                <!-- Adventure range -->
+                <div class="control-group">
+                    <label class="control-label">Encounter range</label>
+                    <div class="range-row">
+                        <input type="number" class="field-input range-inp"
+                               id="rangeMin" min="1" max="20" value="2">
+                        <span class="range-sep">to</span>
+                        <input type="number" class="field-input range-inp"
+                               id="rangeMax" min="1" max="20" value="5">
+                    </div>
+                </div>
+
+                <button type="button" class="adventure-btn" id="adventureBtn"
+                        disabled>
+                    &#x1F3B2; Adventure!
+                </button>
+
+            </div>
+
+            <!-- ── Arena ── -->
+            <div class="arena" id="arena" style="display:none;">
+
+                <!-- Full-screen background image + overlays -->
+                <div class="arena-bg" id="arenaBg"></div>
+                <div class="arena-night-veil" id="arenaNightVeil"></div>
+
+                <div class="arena-content">
+
+                    <div class="arena-top-row">
+                        <h2 class="arena-title" id="arenaTitle">—</h2>
+                        <div class="arena-top-actions">
+                            <!-- inline monster search -->
+                            <div class="search-drop-wrap arena-search-wrap">
+                                <input type="text" class="field-input arena-field-input"
+                                       id="addExtraSearch" placeholder="Add monster…"
+                                       autocomplete="off">
+                                <div class="search-dropdown" id="addExtraDrop"></div>
+                            </div>
+                            <button type="button" class="arena-btn secondary"
+                                    id="clearBtn">Clear all</button>
+                        </div>
+                    </div>
+
+                    <!-- cards -->
+                    <div class="cards-grid" id="cardsGrid"></div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="MonstersByRegion.js"></script>
+</body>
+</html>

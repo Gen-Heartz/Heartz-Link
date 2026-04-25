@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heartz Link - Create Character</title>
+    <link rel="stylesheet" href="characters.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body class="body-scroll">
+
+    <div class="texture-overlay"></div>
+    <div class="stain stain-1"></div>
+    <div class="stain stain-2"></div>
+    <div class="stain stain-3"></div>
+
+    <div class="container container-form">
+
+        <div class="back-nav">
+            <button class="back-btn" onclick="window.location.href='characters.html'" aria-label="Back">
+                <span class="back-arrow">&#8592;</span>
+                <span>Characters</span>
+            </button>
+        </div>
+
+        <div class="title-section">
+            <h1 class="main-title main-title-sm">
+                <span class="title-heart">&#9829;</span> Character Sheet
+            </h1>
+            <div class="divider">
+                <span class="divider-line"></span>
+                <span class="divider-diamond"></span>
+                <span class="divider-line"></span>
+            </div>
+        </div>
+
+        <input type="hidden" id="editCharacterId" value="">
+        <input type="hidden" id="currentHealthLost" value="0">
+        <input type="hidden" id="currentManaLost" value="0">
+        <input type="hidden" id="currentCPLost" value="0">
+        <input type="hidden" id="currentSanityLost" value="0">
+        <!-- Stores all element trait upgrade data as JSON -->
+        <input type="hidden" id="elementTraitData" name="elementTraitData" value="{}">
+
+        <form id="characterForm" class="character-sheet" autocomplete="off">
+
+            <!-- ═══ IDENTITY & CLASS ═══ -->
+            <div class="sheet-section">
+                <div class="section-header">
+                    <h2 class="section-title">Identity &amp; Class</h2>
+                    <div class="section-line"></div>
+                </div>
+
+                <div class="field-row cols-2">
+                    <div class="field-group">
+                        <label class="field-label" for="characterName">Character Name</label>
+                        <input type="text" class="field-input" id="characterName" name="characterName" placeholder="Enter name...">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label" for="playerName">Player Name</label>
+                        <input type="text" class="field-input" id="playerName" name="playerName" placeholder="Enter name...">
+                    </div>
+                </div>
+
+                <div class="field-row cols-4">
+                    <div class="field-group">
+                        <label class="field-label" for="className">Class</label>
+                        <select class="field-input field-select" id="className" name="className">
+                            <option value="">— Select Class —</option>
+                            <optgroup label="Available Classes">
+                                <option value="Archer">Archer</option>
+                                <option value="Assassin">Assassin</option>
+                                <option value="Berserk">Berserk</option>
+                                <option value="Blood Hunter">Blood Hunter</option>
+                                <option value="Warlock">Warlock</option>
+                                <option value="Hunter">Hunter</option>
+                                <option value="Tamer">Tamer</option>
+                                <option value="Duelist">Duelist</option>
+                                <option value="Wielder">Wielder</option>
+                                <option value="Monk">Monk</option>
+                                <option value="Necromancer">Necromancer</option>
+                                <option value="Sage">Sage</option>
+                                <option value="Samurai">Samurai</option>
+                            </optgroup>
+                            <optgroup label="Extended Classes">
+                                <option value="Knight">Knight</option>
+                                <option value="Healer">Healer</option>
+                                <option value="Demonic Spiritualist">Demonic Spiritualist</option>
+                                <option value="Mage">Mage</option>
+                                <option value="Battle Mage">Battle Mage</option>
+                                <option value="Paladin">Paladin</option>
+                                <option value="Elemental Paladin">Elemental Paladin</option>
+                                <option value="Dark Paladin">Dark Paladin</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label" for="classType">Class Type</label>
+                        <input type="text" class="field-input field-locked field-derived" id="classType" name="classType" readonly placeholder="Auto">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label" for="level">Level</label>
+                        <input type="number" class="field-input field-num" id="level" name="level" placeholder="1" min="1" max="20" value="1">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label" for="characterExp">EXP</label>
+                        <input type="number" class="field-input field-num" id="characterExp" name="characterExp" placeholder="0" min="0">
+                    </div>
+                </div>
+
+                <div class="class-info-bar" id="classInfoBar">
+                    <div class="class-info-item">
+                        <span class="info-label">Bonuses:</span>
+                        <span class="info-value" id="classRollBonuses">—</span>
+                    </div>
+                    <div class="class-info-item">
+                        <span class="info-label">Elements:</span>
+                        <span class="info-value" id="classElements">—</span>
+                    </div>
+                    <div class="class-info-item">
+                        <span class="info-label">Base Atk:</span>
+                        <span class="info-value" id="classBaseAtk">—</span>
+                    </div>
+                    <div class="class-info-item">
+                        <span class="info-label">Base Reflex:</span>
+                        <span class="info-value" id="classBaseReflex">—</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ CORE RESOURCES ═══ -->
+            <div class="sheet-section">
+                <div class="section-header">
+                    <h2 class="section-title">Core Resources</h2>
+                    <div class="section-line"></div>
+                </div>
+
+                <div class="field-row cols-4">
+                    <div class="field-group resource-group" id="healthDisplay">
+                        <label class="field-label field-label-resource">Health</label>
+                        <div class="resource-display">
+                            <span class="resource-current health-color" id="healthCurrent">0</span>
+                            <span class="resource-sep">/</span>
+                            <span class="resource-max" id="healthMax">0</span>
+                        </div>
+                        <input type="hidden" id="health" name="health" value="0">
+                        <div class="resource-bar"><div class="resource-fill health-bar" id="healthBar" style="width:100%"></div></div>
+                    </div>
+                    <div class="field-group resource-group" id="manaDisplay">
+                        <label class="field-label field-label-resource">Mana</label>
+                        <div class="resource-display">
+                            <span class="resource-current mana-color" id="manaCurrent">0</span>
+                            <span class="resource-sep">/</span>
+                            <span class="resource-max" id="manaMax">0</span>
+                        </div>
+                        <input type="hidden" id="mana" name="mana" value="0">
+                        <div class="resource-bar"><div class="resource-fill mana-bar" id="manaBar" style="width:100%"></div></div>
+                    </div>
+                    <div class="field-group resource-group" id="cpDisplay">
+                        <label class="field-label field-label-resource">Combat Pts</label>
+                        <div class="resource-display">
+                            <span class="resource-current cp-color" id="cpCurrent">0</span>
+                            <span class="resource-sep">/</span>
+                            <span class="resource-max" id="cpMax">0</span>
+                        </div>
+                        <input type="hidden" id="combatPoints" name="combatPoints" value="0">
+                        <div class="resource-bar"><div class="resource-fill cp-bar" id="cpBar" style="width:100%"></div></div>
+                    </div>
+                    <div class="field-group resource-group" id="sanityDisplay">
+                        <label class="field-label field-label-resource">Sanity</label>
+                        <div class="resource-display">
+                            <span class="resource-current sanity-color" id="sanityCurrent">0</span>
+                            <span class="resource-sep">/</span>
+                            <span class="resource-max" id="sanityMax">0</span>
+                        </div>
+                        <input type="hidden" id="sanity" name="sanity" value="0">
+                        <div class="resource-bar"><div class="resource-fill sanity-bar" id="sanityBar" style="width:100%"></div></div>
+                    </div>
+                </div>
+
+                <div class="adjust-section">
+                    <div class="adjust-label-row">
+                        <span class="adjust-section-label">Adjust Resources (+ lose / − restore)</span>
+                    </div>
+                    <div class="field-row cols-4">
+                        <div class="field-group"><label class="field-label field-label-adjust" for="lostHealth">Health</label><div class="adjust-wrapper"><input type="number" class="field-input field-num field-adjust" id="lostHealth" name="lostHealth" placeholder="±0"><button type="button" class="adjust-btn" data-target="health">✓</button></div></div>
+                        <div class="field-group"><label class="field-label field-label-adjust" for="lostMana">Mana</label><div class="adjust-wrapper"><input type="number" class="field-input field-num field-adjust" id="lostMana" name="lostMana" placeholder="±0"><button type="button" class="adjust-btn" data-target="mana">✓</button></div></div>
+                        <div class="field-group"><label class="field-label field-label-adjust" for="usedCombatPoints">CP</label><div class="adjust-wrapper"><input type="number" class="field-input field-num field-adjust" id="usedCombatPoints" name="usedCombatPoints" placeholder="±0"><button type="button" class="adjust-btn" data-target="combatPoints">✓</button></div></div>
+                        <div class="field-group"><label class="field-label field-label-adjust" for="lostSanity">Sanity</label><div class="adjust-wrapper"><input type="number" class="field-input field-num field-adjust" id="lostSanity" name="lostSanity" placeholder="±0"><button type="button" class="adjust-btn" data-target="sanity">✓</button></div></div>
+                    </div>
+                </div>
+
+                <div class="section-subheader">
+                    <span class="subheader-label">Derived Attributes</span>
+                    <span class="subheader-note">Auto-calculated</span>
+                </div>
+                <div class="field-row cols-3">
+                    <div class="field-group"><label class="field-label" for="proficiency">Proficiency</label><input type="text" class="field-input field-locked field-derived" id="proficiency" name="proficiency" readonly placeholder="—"></div>
+                    <div class="field-group"><label class="field-label" for="reflex">Reflex</label><input type="text" class="field-input field-locked field-derived" id="reflex" name="reflex" readonly placeholder="—"></div>
+                    <div class="field-group"><label class="field-label" for="enchantment">Enchantment</label><input type="text" class="field-input field-locked field-derived" id="enchantment" name="enchantment" readonly placeholder="—"></div>
+                </div>
+                <div class="field-row cols-3">
+                    <div class="field-group"><label class="field-label" for="physCritDamage">Phys/Crit Damage</label><input type="text" class="field-input field-locked field-derived" id="physCritDamage" name="physCritDamage" readonly placeholder="—"></div>
+                    <div class="field-group"><label class="field-label" for="magicalDamage">Magical Damage</label><input type="text" class="field-input field-locked field-derived" id="magicalDamage" name="magicalDamage" readonly placeholder="—"></div>
+                    <div class="field-group"><label class="field-label" for="control">Control</label><input type="text" class="field-input field-locked field-derived" id="control" name="control" readonly placeholder="—"></div>
+                </div>
+            </div>
+
+            <!-- ═══ SKILLS ═══ -->
+            <div class="sheet-section">
+                <div class="section-header">
+                    <h2 class="section-title">Skills</h2>
+                    <div class="section-line"></div>
+                </div>
+
+                <div class="sp-banner" id="spBanner">
+                    <div class="sp-block"><span class="sp-label">Total Points</span><span class="sp-value" id="spTotal">0</span></div>
+                    <div class="sp-block"><span class="sp-label">Spent</span><span class="sp-value" id="spSpent">0</span></div>
+                    <div class="sp-block sp-block-remain"><span class="sp-label">Remaining</span><span class="sp-value" id="spRemain">0</span></div>
+                </div>
+
+                <div class="field-row cols-4">
+                    <div class="field-group"><label class="field-label field-label-header">Physical</label><input type="number" class="field-input field-num field-attr" id="physicalAttr" name="physicalAttr" placeholder="0"></div>
+                    <div class="field-group"><label class="field-label field-label-header">Magical</label><input type="number" class="field-input field-num field-attr" id="magicalAttr" name="magicalAttr" placeholder="0"></div>
+                    <div class="field-group"><label class="field-label field-label-header">Social</label><input type="number" class="field-input field-num field-attr" id="socialAttr" name="socialAttr" placeholder="0"></div>
+                    <div class="field-group"><label class="field-label field-label-header">Class</label><input type="number" class="field-input field-num field-attr" id="classAttr" name="classAttr" placeholder="0"></div>
+                </div>
+
+                <!-- Physical -->
+                <div class="skill-block"><div class="skill-block-tag">Physical</div>
+                    <div class="field-row cols-3">
+                        <div class="field-group"><label class="field-label">Agility (pts)</label><input type="number" class="field-input field-num skill-value" id="agilityValue" name="agilityValue" data-attr="physicalAttr" data-total="agilityTotal" min="0" placeholder="0"></div>
+                        <div class="field-group"><label class="field-label">Strength (pts)</label><input type="number" class="field-input field-num skill-value" id="strengthValue" name="strengthValue" data-attr="physicalAttr" data-total="strengthTotal" min="0" placeholder="0"></div>
+                        <div class="field-group"><label class="field-label">Endurance (pts)</label><input type="number" class="field-input field-num skill-value" id="enduranceValue" name="enduranceValue" data-attr="physicalAttr" data-total="enduranceTotal" min="0" placeholder="0"></div>
+                    </div>
+                    <div class="field-row cols-3">
+                        <div class="field-group"><label class="field-label total-label">Agility Total</label><input type="number" class="field-input field-num field-total field-locked field-derived" id="agilityTotal" name="agilityTotal" readonly></div>
+                        <div class="field-group"><label class="field-label total-label">Strength Total</label><input type="number" class="field-input field-num field-total field-locked field-derived" id="strengthTotal" name="strengthTotal" readonly></div>
+                        <div class="field-group"><label class="field-label total-label">Endurance Total</label><input type="number" class="field-input field-num field-total field-locked field-derived" id="enduranceTotal" name="enduranceTotal" readonly></div>
+                    </div>
+                </div>
+
+                <!-- Magical -->
+                <div class="skill-block"><div class="skill-block-tag">Magical</div>
+                    <div class="field-row cols-3">
+                        <div class="field-group"><label class="field-label">Crafting (pts)</label><input type="number" class="field-input field-num skill-value" id="craftingValue" name="craftingValue" data-attr="magicalAttr" data-total="craftingTotal" min="0" placeholder="0"></div>
+                        <div class="field-group"><label class="field-label">Impact (pts)</label><input type="number" class="field-input field-num skill-value" id="impactValue" name="impactValue" data-attr="magicalAttr" data-total="impactTotal" min="0" placeholder="0"></div>
+                        <div class="field-group"><label class="field-label">Manipulation (pts)</label><input type="number" class="field-input field-num skill-value" id="manipulationValue" name="manipulationValue" data-attr="magicalAttr" data-total="manipulationTotal" min="0" placeholder="0"></div>
+                    </div>
+                    <div class="field-row cols-3">
+                        <div class="field-group"><label class="field-label total-label">Crafting Total</label><input type="number" class="field-input field-num field-total field-locked field-derived" id="craftingTotal" name="craftingTotal" readonly></div>
+                        <div class="field-group"><label class="field-label total-label">Impact Total</label><input type="number" class="field-input field-num field-total field-locked field-derived" id="impactTotal" name="impactTotal" readonly></div>
+                        <div class="field-group"><label class="field-label total-label">Manipulation Total</label><input type="number" class="field-input field-num field-total field-locked field-derived" id="manipulationTotal" name="manipulationTotal" readonly></div>
+                    </div>
+                </div>
+
+                <!-- Social -->
+                <div class="skill-block"><div class="skill-block-tag">Social</div>
+                    <div class="field-row cols-3">
+                        <div class="field-group"><label class="field-label">Deception (pts)</label><input type="number" class="field-input field-num skill-value" id="deceptionValue" name="deceptionValue" data-attr="socialAttr" data-total="deceptionTotal" min="0" placeholder="0"></div>
+                        <div class="field-group"><label class="field-label">Performance (pts)</label><input type="number" class="field-input field-num skill-value" id="performanceValue" name="performanceValue" data-attr="socialAttr" data-total="performanceTotal" min="0" placeholder="0"></div>
+                        <div class="field-group"><label class="field-label">Confidence (pts)</label><input type="number" class="field-input field-num skill-value" id="confidenceValue" name="confidenceValue" data-attr="socialAttr" data-total="confidenceTotal" min="0" placeholder="0"></div>
+                    </div>
+                    <div class="field-row cols-3">
+                        <div class="field-group"><label class="field-label total-label">Deception Total</label><input type="number" class="field-input field-num field-total field-locked field-derived" id="deceptionTotal" name="deceptionTotal" readonly></div>
+                        <div class="field-group"><label class="field-label total-label">Performance Total</label><input type="number" class="field-input field-num field-total field-locked field-derived" id="performanceTotal" name="performanceTotal" readonly></div>
+                        <div class="field-group"><label class="field-label total-label">Confidence Total</label><input type="number" class="field-input field-num field-total field-locked field-derived" id="confidenceTotal" name="confidenceTotal" readonly></div>
+                    </div>
+                </div>
+
+                <!-- Class -->
+                <div class="skill-block"><div class="skill-block-tag">Class</div>
+                    <div class="field-row cols-3">
+                        <div class="field-group"><label class="field-label">Dodge (pts)</label><input type="number" class="field-input field-num skill-value" id="dodgeValue" name="dodgeValue" data-attr="classAttr" data-total="dodgeTotal" min="0" placeholder="0"></div>
+                        <div class="field-group"><label class="field-label">Combat (pts)</label><input type="number" class="field-input field-num skill-value" id="combatValue" name="combatValue" data-attr="classAttr" data-total="combatTotal" min="0" placeholder="0"></div>
+                        <div class="field-group"><label class="field-label">Mystic (pts)</label><input type="number" class="field-input field-num skill-value" id="mysticValue" name="mysticValue" data-attr="classAttr" data-total="mysticTotal" min="0" placeholder="0"></div>
+                    </div>
+                    <div class="field-row cols-3">
+                        <div class="field-group"><label class="field-label total-label">Dodge Total</label><input type="number" class="field-input field-num field-total field-locked field-derived" id="dodgeTotal" name="dodgeTotal" readonly></div>
+                        <div class="field-group"><label class="field-label total-label">Combat Total</label><input type="number" class="field-input field-num field-total field-locked field-derived" id="combatTotal" name="combatTotal" readonly></div>
+                        <div class="field-group"><label class="field-label total-label">Mystic Total</label><input type="number" class="field-input field-num field-total field-locked field-derived" id="mysticTotal" name="mysticTotal" readonly></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ EQUIPMENT ═══ -->
+            <div class="sheet-section">
+                <div class="section-header"><h2 class="section-title">Equipment</h2><div class="section-line"></div></div>
+                <div class="field-row cols-3">
+                    <div class="field-group"><label class="field-label field-label-header">Armor</label><label class="field-label">Name</label><input type="text" class="field-input" id="armorName" name="armorName" placeholder="Enter armor..."></div>
+                    <div class="field-group"><label class="field-label field-label-header">Weapon 1</label><label class="field-label">Name</label><input type="text" class="field-input" id="sword1Name" name="sword1Name" placeholder="Enter weapon..."></div>
+                    <div class="field-group"><label class="field-label field-label-header">Weapon 2</label><label class="field-label">Name</label><input type="text" class="field-input" id="sword2Name" name="sword2Name" placeholder="Enter weapon..."></div>
+                </div>
+                <div class="field-row cols-3">
+                    <div class="field-group"><label class="field-label">Armor Value</label><input type="number" class="field-input field-num" id="armorValue" name="armorValue" placeholder="0"></div>
+                    <div class="field-group"><label class="field-label">Weapon 1 Dmg</label><input type="text" class="field-input" id="sword1Damage" name="sword1Damage" placeholder="e.g. 1d8+2"></div>
+                    <div class="field-group"><label class="field-label">Weapon 2 Dmg</label><input type="text" class="field-input" id="sword2Damage" name="sword2Damage" placeholder="e.g. 1d6+1"></div>
+                </div>
+                <div class="field-row cols-1"><div class="field-group"><label class="field-label">Base Defense</label><input type="number" class="field-input field-num" id="baseDefense" name="baseDefense" placeholder="0"></div></div>
+            </div>
+
+            <!-- ═══ CLASS PROGRESSION ═══ -->
+            <div class="sheet-section">
+                <div class="section-header"><h2 class="section-title">Class Progression</h2><div class="section-line"></div></div>
+                <div class="field-row cols-4">
+                    <div class="field-group"><label class="field-label">Level 1</label><input type="text" class="field-input" id="level1" name="level1" placeholder="Ability..."></div>
+                    <div class="field-group"><label class="field-label">Level 2</label><input type="text" class="field-input" id="level2" name="level2" placeholder="Ability..."></div>
+                    <div class="field-group"><label class="field-label">Level 3</label><input type="text" class="field-input" id="level3" name="level3" placeholder="Ability..."></div>
+                    <div class="field-group"><label class="field-label">Level 4</label><input type="text" class="field-input" id="level4" name="level4" placeholder="Ability..."></div>
+                </div>
+                <div class="field-row cols-4">
+                    <div class="field-group"><label class="field-label">Level 5</label><input type="text" class="field-input" id="level5" name="level5" placeholder="Ability..."></div>
+                    <div class="field-group"><label class="field-label">Level 10</label><input type="text" class="field-input" id="level10" name="level10" placeholder="Ability..."></div>
+                    <div class="field-group"><label class="field-label">Level 15</label><input type="text" class="field-input" id="level15" name="level15" placeholder="Ability..."></div>
+                    <div class="field-group"><label class="field-label">Level 20</label><input type="text" class="field-input" id="level20" name="level20" placeholder="Ability..."></div>
+                </div>
+                <div class="field-row cols-2">
+                    <div class="field-group"><label class="field-label">Class Type Bonus</label><input type="text" class="field-input field-locked field-derived" id="classTypeBonus" name="classTypeBonus" readonly placeholder="Auto-filled"></div>
+                    <div class="field-group"><label class="field-label">Element Count</label><input type="number" class="field-input field-num field-locked field-derived" id="elementCount" name="elementCount" readonly placeholder="0"></div>
+                </div>
+                <div class="field-row cols-1"><div class="field-group"><label class="field-label">Inventory (Backpack)</label><textarea class="field-input field-textarea" id="inventory" name="inventory" rows="4" placeholder="List items here..."></textarea></div></div>
+            </div>
+
+            <!-- ═══ ELEMENTS — DYNAMIC SYSTEM ═══ -->
+            <div class="sheet-section">
+                <div class="section-header">
+                    <h2 class="section-title">Elements</h2>
+                    <div class="section-line"></div>
+                </div>
+
+                <!-- Grade costs summary -->
+                <div class="elem-grade-bar" id="elemGradeBar">
+                    <div class="sp-block"><span class="sp-label">Owned Grades</span><input type="number" class="field-input field-num elem-grade-input" id="ownedGrades" name="ownedGrades" placeholder="0" min="0"></div>
+                    <div class="sp-block"><span class="sp-label">Used Grades</span><span class="sp-value" id="usedGradesDisplay">0</span><input type="hidden" id="usedGrades" name="usedGrades" value="0"></div>
+                    <div class="sp-block sp-block-remain"><span class="sp-label">Remaining</span><span class="sp-value" id="remainGradesDisplay">0</span><input type="hidden" id="remainingGrades" name="remainingGrades" value="0"></div>
+                </div>
+
+                <!-- Element Slots — dynamically rendered by JS -->
+                <div id="elementSlotsContainer"></div>
+
+                <!-- Bonus Traits (static) -->
+                <div class="field-row cols-3" style="margin-top:1rem;">
+                    <div class="field-group"><label class="field-label">Bonus Trait 1</label><input type="text" class="field-input" id="bonusTrait1" name="bonusTrait1" placeholder="Enter trait..."></div>
+                    <div class="field-group"><label class="field-label">Bonus Trait 2</label><input type="text" class="field-input" id="bonusTrait2" name="bonusTrait2" placeholder="Enter trait..."></div>
+                    <div class="field-group"><label class="field-label">Bonus Trait 3</label><input type="text" class="field-input" id="bonusTrait3" name="bonusTrait3" placeholder="Enter trait..."></div>
+                </div>
+            </div>
+
+            <!-- ═══ CHARACTER DETAILS ═══ -->
+            <div class="sheet-section">
+                <div class="section-header"><h2 class="section-title">Character Details</h2><div class="section-line"></div></div>
+                <div class="field-row cols-2">
+                    <div class="field-group"><label class="field-label">Race</label><input type="text" class="field-input" id="race" name="race" placeholder="Enter race..."></div>
+                    <div class="field-group"><label class="field-label">Race Bonus</label><input type="text" class="field-input" id="raceBonus" name="raceBonus" placeholder="Enter bonus..."></div>
+                </div>
+                <div class="field-row cols-2">
+                    <div class="field-group"><label class="field-label">Race Sanity Value</label><input type="number" class="field-input field-num" id="raceSanity" name="raceSanity" placeholder="0"></div>
+                    <div class="field-group"><label class="field-label">Class Sanity Value</label><input type="number" class="field-input field-num" id="classSanity" name="classSanity" placeholder="0"></div>
+                </div>
+                <div class="field-row cols-1"><div class="field-group"><label class="field-label">Talents</label><textarea class="field-input field-textarea" id="talents" name="talents" rows="3" placeholder="List talents..."></textarea></div></div>
+                <div class="field-row cols-1"><div class="field-group"><label class="field-label">Traumas</label><textarea class="field-input field-textarea" id="traumas" name="traumas" rows="3" placeholder="List traumas..."></textarea></div></div>
+                <div class="field-row cols-1"><div class="field-group"><label class="field-label">Languages</label><textarea class="field-input field-textarea" id="languages" name="languages" rows="2" placeholder="List languages..."></textarea></div></div>
+            </div>
+
+            <!-- ═══ FORM ACTIONS ═══ -->
+            <div class="form-actions">
+                <button type="submit" class="nav-btn action-btn save-btn"><span class="btn-icon">🕯️</span><span class="btn-label">Save Character</span></button>
+                <button type="button" class="nav-btn action-btn clear-btn" id="clearFormBtn"><span class="btn-icon">🗑️</span><span class="btn-label">Clear Form</span></button>
+            </div>
+
+        </form>
+
+        <div class="divider divider-bottom"><span class="divider-line"></span><span class="divider-diamond"></span><span class="divider-line"></span></div>
+        <p class="footer-note">Where every heart is linked by fate</p>
+    </div>
+
+    <div class="toast" id="toast"><span class="toast-icon">✔</span><span class="toast-text" id="toastText">Saved!</span></div>
+
+    <script src="characters.js"></script>
+</body>
+</html>

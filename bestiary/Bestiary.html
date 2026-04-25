@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heartz Link - Bestiary</title>
+    <link rel="stylesheet" href="Bestiary.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="texture-overlay"></div>
+    <div class="stain stain-1"></div>
+    <div class="stain stain-2"></div>
+    <div class="stain stain-3"></div>
+
+    <div class="container">
+
+        <button class="back-btn" id="backBtn" aria-label="Back to Home">
+            <span class="back-icon">&#8592;</span>
+            <span class="back-label">Home</span>
+        </button>
+
+        <div class="title-section">
+            <div class="title-emblem">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="36" stroke="#4a2f18" stroke-width="1" opacity="0.35" stroke-dasharray="4 3"/>
+                    <path d="M20 50 C20 35 28 25 40 22 C52 25 60 35 60 50 C60 60 52 66 40 68 C28 66 20 60 20 50Z" stroke="#4a2f18" stroke-width="1.2" fill="rgba(204,159,56,0.08)" opacity="0.6"/>
+                    <circle cx="33" cy="44" r="3" fill="#cc9f38" opacity="0.4"/>
+                    <circle cx="33" cy="44" r="1.2" fill="#4a2f18" opacity="0.5"/>
+                    <circle cx="47" cy="44" r="3" fill="#cc9f38" opacity="0.4"/>
+                    <circle cx="47" cy="44" r="1.2" fill="#4a2f18" opacity="0.5"/>
+                    <path d="M33 30 L28 20 L35 28" stroke="#4a2f18" stroke-width="1" fill="none" opacity="0.4"/>
+                    <path d="M47 30 L52 20 L45 28" stroke="#4a2f18" stroke-width="1" fill="none" opacity="0.4"/>
+                    <path d="M34 54 Q40 58 46 54" stroke="#4a2f18" stroke-width="1" fill="none" opacity="0.4"/>
+                    <line x1="37" y1="54" x2="37" y2="57" stroke="#4a2f18" stroke-width="0.8" opacity="0.35"/>
+                    <line x1="43" y1="54" x2="43" y2="57" stroke="#4a2f18" stroke-width="0.8" opacity="0.35"/>
+                </svg>
+            </div>
+            <h1 class="main-title">Bestiary</h1>
+            <div class="divider">
+                <span class="divider-line"></span>
+                <span class="divider-diamond"></span>
+                <span class="divider-line"></span>
+            </div>
+            <p class="subtitle">Catalogue of Creatures &amp; Monsters</p>
+        </div>
+
+        <nav class="nav-list" aria-label="Bestiary Navigation">
+            <button class="nav-btn" data-page="monster-book" aria-label="Monster Book">
+                <span class="nav-btn-icon">&#x1F4D5;</span>
+                <div class="nav-btn-content">
+                    <span class="nav-btn-title">Monster Book</span>
+                    <span class="nav-btn-desc">Browse all catalogued creatures</span>
+                </div>
+                <span class="nav-btn-arrow">&#8250;</span>
+            </button>
+            <button class="nav-btn" data-page="create-monster" aria-label="Create Monster">
+                <span class="nav-btn-icon">&#x2728;</span>
+                <div class="nav-btn-content">
+                    <span class="nav-btn-title">Create Monster</span>
+                    <span class="nav-btn-desc">Design and register a new creature</span>
+                </div>
+                <span class="nav-btn-arrow">&#8250;</span>
+            </button>
+            <button class="nav-btn" data-page="monsters-by-region" aria-label="Monsters by Region">
+                <span class="nav-btn-icon">&#x1F5FA;&#xFE0F;</span>
+                <div class="nav-btn-content">
+                    <span class="nav-btn-title">Monsters by Region</span>
+                    <span class="nav-btn-desc">Explore creatures across the world</span>
+                </div>
+                <span class="nav-btn-arrow">&#8250;</span>
+            </button>
+        </nav>
+
+        <div class="divider divider-bottom">
+            <span class="divider-line"></span>
+            <span class="divider-diamond"></span>
+            <span class="divider-line"></span>
+        </div>
+        <p class="footer-note"><em>"To know the beast is to survive the hunt."</em></p>
+
+    </div>
+
+    <script src="Bestiary.js"></script>
+</body>
+</html>

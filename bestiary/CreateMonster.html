@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heartz Link - Create Monster</title>
+    <link rel="stylesheet" href="CreateMonster.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="texture-overlay"></div>
+    <div class="stain stain-1"></div>
+    <div class="stain stain-2"></div>
+
+    <!-- ── Header ──────────────────────────────────────── -->
+    <header class="top-bar">
+        <button class="back-btn" id="backBtn" type="button">
+            <span class="back-icon">&#8592;</span>
+            <span class="back-label">Bestiary</span>
+        </button>
+
+        <h1 class="top-title" id="pageTitle">Create Monster</h1>
+
+        <div class="top-actions">
+            <button class="delete-btn" id="deleteMonsterBtn"
+                    type="button" style="display:none;"
+                    aria-label="Delete this monster">
+                <span class="delete-btn-icon" aria-hidden="true">&#x1F5D1;</span>
+                <span class="delete-btn-label">Delete</span>
+            </button>
+
+            <button class="save-btn" id="saveMonsterBtn" type="button">
+                <span aria-hidden="true">&#10003;</span>
+                <span>Save</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ── Form ────────────────────────────────────────── -->
+    <main class="form-wrapper">
+        <form class="monster-form" id="monsterForm" autocomplete="off" novalidate>
+
+            <!-- ── IMAGE ──────────────────────────────── -->
+            <section class="form-section">
+                <h2 class="section-title">Image</h2>
+
+                <!-- compression status badge -->
+                <div class="img-status" id="imgStatus" style="display:none;">
+                    <span class="img-status-text" id="imgStatusText"></span>
+                </div>
+
+                <div class="image-drop" id="imageDrop">
+                    <div class="image-preview-inner" id="imagePreviewInner">
+                        <span class="img-placeholder-icon" aria-hidden="true">&#x1F5BC;</span>
+                        <span class="img-placeholder-text">
+                            Click or drag &amp; drop an image<br>
+                            <small style="opacity:.7;">(auto-compressed to fit storage)</small>
+                        </span>
+                    </div>
+                    <img id="imagePreviewEl" src="" alt="Monster preview"
+                         style="display:none; width:100%; height:100%;
+                                object-fit:cover; position:absolute; inset:0;">
+                    <input type="file" id="imageFileInput" accept="image/*" hidden>
+                </div>
+
+                <button type="button" class="clear-img-btn" id="clearImgBtn"
+                        style="display:none;" aria-label="Remove image">
+                    <span aria-hidden="true">&#10005;</span> Remove image
+                </button>
+            </section>
+
+            <!-- ── IDENTITY ───────────────────────────── -->
+            <section class="form-section">
+                <h2 class="section-title">Identity</h2>
+                <div class="field-group">
+                    <label class="field-label" for="monsterName">
+                        Monster Name <span class="required" aria-label="required">*</span>
+                    </label>
+                    <input type="text" id="monsterName" class="field-input"
+                           placeholder="e.g. Emberclaw" required>
+                </div>
+                <div class="field-group">
+                    <label class="field-label" for="monsterAlias">Known Alias</label>
+                    <input type="text" id="monsterAlias" class="field-input"
+                           placeholder="e.g. The Flame Stalker">
+                </div>
+            </section>
+
+            <!-- ── REGIONS ────────────────────────────── -->
+            <section class="form-section">
+                <h2 class="section-title">Regions</h2>
+                <p class="field-hint">Select one or more regions where this creature is found.</p>
+                <div class="tag-chips" id="regionChips"></div>
+                <div class="tag-dropdown-wrap" id="regionDropWrap">
+                    <input type="text" class="field-input tag-search"
+                           id="regionSearch" placeholder="Search regions…"
+                           aria-label="Search regions" aria-autocomplete="list">
+                    <div class="tag-dropdown" id="regionDropdown" role="listbox"></div>
+                </div>
+                <p class="no-data-hint" id="noRegionHint" style="display:none;">
+                    No regions found. Create some in
+                    <a href="MonstersByRegion.html" class="inline-link">Monsters by Region</a>.
+                </p>
+            </section>
+
+            <!-- ── DIET ───────────────────────────────── -->
+            <section class="form-section">
+                <h2 class="section-title">Diet</h2>
+                <div class="field-group">
+                    <label class="field-label" for="monsterDiet">Diet Description</label>
+                    <input type="text" id="monsterDiet" class="field-input"
+                           placeholder="e.g. Carnivore, Herbivore…">
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Prey (Other Monsters)</label>
+                    <p class="field-hint">Select monsters this creature hunts.</p>
+                    <div class="tag-chips" id="preyChips"></div>
+                    <div class="tag-dropdown-wrap" id="preyDropWrap">
+                        <input type="text" class="field-input tag-search"
+                               id="preySearch" placeholder="Search monsters…"
+                               aria-label="Search monsters" aria-autocomplete="list">
+                        <div class="tag-dropdown" id="preyDropdown" role="listbox"></div>
+                    </div>
+                    <p class="no-data-hint" id="noPreyHint" style="display:none;">
+                        No other monsters catalogued yet.
+                    </p>
+                </div>
+            </section>
+
+            <!-- ── APPEARANCE ─────────────────────────── -->
+            <section class="form-section">
+                <h2 class="section-title">Full Description</h2>
+                <div class="field-group">
+                    <label class="field-label" for="monsterAppearance">
+                        Appearance Description
+                    </label>
+                    <textarea id="monsterAppearance" class="field-textarea" rows="5"
+                              placeholder="Describe the creature's physical features…"></textarea>
+                </div>
+            </section>
+
+            <!-- ── EXTRACTABLE ITEMS ──────────────────── -->
+            <section class="form-section">
+                <h2 class="section-title">Extractable Items</h2>
+                <div class="dynamic-list" id="itemsList"></div>
+                <button type="button" class="add-btn" id="addItemBtn">
+                    <span aria-hidden="true">+</span> Add Item
+                </button>
+            </section>
+
+            <!-- ── CLASSIFICATION POINTS ──────────────── -->
+            <section class="form-section">
+                <h2 class="section-title">Classification Points</h2>
+
+                <h3 class="subsection-title">Physical</h3>
+                <div class="stats-row">
+                    <div class="stat-field">
+                        <label class="stat-label" for="statAgility">Agility</label>
+                        <input type="number" class="stat-input" id="statAgility"
+                               min="0" value="0">
+                    </div>
+                    <div class="stat-field">
+                        <label class="stat-label" for="statStrength">Strength</label>
+                        <input type="number" class="stat-input" id="statStrength"
+                               min="0" value="0">
+                    </div>
+                    <div class="stat-field">
+                        <label class="stat-label" for="statEndurance">Endurance</label>
+                        <input type="number" class="stat-input" id="statEndurance"
+                               min="0" value="0">
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">Magical</h3>
+                <div class="stats-row">
+                    <div class="stat-field">
+                        <label class="stat-label" for="statCrafting">Crafting</label>
+                        <input type="number" class="stat-input" id="statCrafting"
+                               min="0" value="0">
+                    </div>
+                    <div class="stat-field">
+                        <label class="stat-label" for="statImpact">Impact</label>
+                        <input type="number" class="stat-input" id="statImpact"
+                               min="0" value="0">
+                    </div>
+                    <div class="stat-field">
+                        <label class="stat-label" for="statManipulation">Manipulation</label>
+                        <input type="number" class="stat-input" id="statManipulation"
+                               min="0" value="0">
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">Extra Skills</h3>
+                <div class="dynamic-list" id="extraSkillsList"></div>
+                <button type="button" class="add-btn" id="addSkillBtn">
+                    <span aria-hidden="true">+</span> Add Custom Skill
+                </button>
+            </section>
+
+            <!-- ── ELEMENTAL ATTRIBUTES ───────────────── -->
+            <section class="form-section">
+                <h2 class="section-title">Elemental Attributes</h2>
+                <p class="field-hint">Tap an element to toggle affinity. Tap again to deselect.</p>
+                <div class="elements-tag-grid" id="elementsTagGrid" role="group"
+                     aria-label="Elemental attributes"></div>
+            </section>
+
+        </form>
+    </main>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         DELETE CONFIRMATION MODAL
+         Placed directly in <body> so it is never clipped by the
+         scrollable <main> container.
+    ═══════════════════════════════════════════════════════════════ -->
+    <div class="modal-backdrop" id="deleteDialog"
+         role="alertdialog" aria-modal="true"
+         aria-labelledby="deleteDialogTitle"
+         aria-describedby="deleteDialogBody"
+         style="display:none;">
+        <div class="modal-panel">
+            <div class="modal-accent-bar"></div>
+            <div class="modal-inner">
+                <div class="modal-danger-icon" aria-hidden="true">&#x1F5D1;</div>
+                <h2 class="modal-title" id="deleteDialogTitle">Delete Monster?</h2>
+                <p  class="modal-body"  id="deleteDialogBody">
+                    This action is permanent and cannot be undone.
+                    The creature will be removed from all regions.
+                </p>
+                <div class="modal-divider"></div>
+                <div class="modal-actions">
+                    <button class="modal-btn modal-btn-cancel"
+                            id="dialogCancel" type="button">Cancel</button>
+                    <button class="modal-btn modal-btn-confirm"
+                            id="dialogConfirm" type="button">
+                        <span aria-hidden="true">&#x1F5D1;</span> Delete Forever
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- imageUtils must load before CreateMonster.js -->
+    <script src="imageUtils.js"></script>
+    <script src="CreateMonster.js"></script>
+</body>
+</html>
