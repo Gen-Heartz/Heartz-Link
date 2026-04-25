@@ -3,20 +3,54 @@
    Class definitions, type data, all class
    formulas, stat bonuses, dropdown handling,
    class info bar population.
-   No UI layout code.
+
+   v2 — Official elemental rules enforced:
+        maxElements, allowedCategories,
+        bonusCharacteristics, blockedElements
    ============================================= */
 
 'use strict';
 
 import { $, flashField, showClassInfoBar, setInfoText } from './layout.js';
 
-/* ─── Write helpers ─── */
+/* ─── Write helper ─── */
 function sf(id, v) { const el = $(id); if (el) el.value = v; }
 
-/* ═══════════════════════════════════════
-   TYPE DATA
-   All 13 class types with full stat values.
-═══════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════
+   OFFICIAL ELEMENT CLASSIFICATION
+   These are the four canonical categories.
+   Racial = Blood, Poison, Vine, Metal
+   Mystic = Holy, Dark
+═══════════════════════════════════════════════════ */
+export const ELEMENT_CATEGORIES = {
+    Natural:   ['Fire', 'Water', 'Earth', 'Air'],
+    Divergent: ['Lightning', 'Ice', 'Gravity', 'Sound'],
+    Racial:    ['Blood', 'Poison', 'Vine', 'Metal'],
+    Mystic:    ['Holy', 'Dark']
+};
+
+/* ─── Flat list of every element per category (for quick lookup) ─── */
+export const ALL_ELEMENTS_BY_CATEGORY = ELEMENT_CATEGORIES;
+
+/* ─── Resolve a category name to its element list ─── */
+export function getElementsInCategory(cat) {
+    return ELEMENT_CATEGORIES[cat] ? [...ELEMENT_CATEGORIES[cat]] : [];
+}
+
+/* ─── Build a deduplicated, sorted element list from category names ─── */
+export function resolveAllowedElements(allowedCategories, blockedElements = []) {
+    const set = new Set();
+    (allowedCategories || []).forEach(cat => {
+        (ELEMENT_CATEGORIES[cat] || []).forEach(e => {
+            if (!blockedElements.includes(e)) set.add(e);
+        });
+    });
+    return Array.from(set).sort();
+}
+
+/* ═══════════════════════════════════════════════════
+   TYPE DATA  (13 types — unchanged)
+═══════════════════════════════════════════════════ */
 export const TYPE_DATA = {
     'Fast': {
         healthPerLvl:3,  manaPerLvl:2,  cpBase:2,
@@ -98,7 +132,7 @@ export const TYPE_DATA = {
     }
 };
 
-/* ─── Knight special overrides (merges on top of Strong+) ─── */
+/* ─── Knight special overrides ─── */
 export const KNIGHT_OVERRIDES = {
     healthPerLvl:6, manaPerLvl:0,  cpBase:4,
     baseAtk:4,      baseReflex:1,
@@ -106,31 +140,240 @@ export const KNIGHT_OVERRIDES = {
     enchBase:1,     controlBase:2
 };
 
-/* ═══════════════════════════════════════
-   CLASS DEFINITIONS
-═══════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════
+   CLASS DEFINITIONS  —  Official elemental rules
+
+   Each class entry contains:
+
+   type               — class type key (maps to TYPE_DATA)
+   isKnight           — triggers KNIGHT_OVERRIDES
+
+   maxElements        — hard cap on main element slots
+   allowedCategories  — category names whose elements may
+                        be chosen as main elements
+   blockedElements    — individual elements explicitly
+                        forbidden even if their category
+                        is listed (e.g. Healer: no Fire)
+
+   bonusCharacteristics — { ElementName: count }
+                          These are bonus-slot only.
+                          The element does NOT appear
+                          in main selection dropdowns.
+
+   elDesc             — human-readable description shown
+                        in the class info bar
+═══════════════════════════════════════════════════ */
 export const CLASS_DATA = {
-    'Archer':               { type:'Fast+',      elCount:3, elDesc:'Natural + Divergent + Mystic',                 allowedCats:['Natural','Divergent','Mystic'] },
-    'Assassin':             { type:'Fast+',      elCount:5, elDesc:'Natural + Mystic + 3 Poison',                  allowedCats:['Natural','Mystic','Poison'] },
-    'Berserk':              { type:'Strong',     elCount:5, elDesc:'Natural + Divergent + 3 Blood',                allowedCats:['Natural','Divergent','Blood'] },
-    'Blood Hunter':         { type:'Neutral',    elCount:3, elDesc:'Natural + Divergent + Blood',                  allowedCats:['Natural','Divergent','Blood'] },
-    'Warlock':              { type:'Sorcerer-',  elCount:3, elDesc:'Natural + Poison',                             allowedCats:['Natural','Poison'] },
-    'Hunter':               { type:'Strong+',    elCount:3, elDesc:'Natural + Divergent + Mystic',                 allowedCats:['Natural','Divergent','Mystic'] },
-    'Tamer':                { type:'Neutral+',   elCount:3, elDesc:'Natural + Divergent + Mystic',                 allowedCats:['Natural','Divergent','Mystic'] },
-    'Duelist':              { type:'Fast',       elCount:2, elDesc:'Natural + Divergent',                          allowedCats:['Natural','Divergent'] },
-    'Wielder':              { type:'Fast',       elCount:3, elDesc:'Natural + Divergent + Mystic',                 allowedCats:['Natural','Divergent','Mystic'] },
-    'Monk':                 { type:'Neutral',    elCount:5, elDesc:'Natural + Divergent + 3 Holy Traits',          allowedCats:['Natural','Divergent','Holy'] },
-    'Necromancer':          { type:'Sorcerer++', elCount:3, elDesc:'Natural + Dark',                               allowedCats:['Natural','Dark'] },
-    'Sage':                 { type:'Sorcerer+',  elCount:3, elDesc:'Natural + Divergent + Racial',                 allowedCats:['Natural','Divergent','Mystic','Holy','Dark','Blood','Poison'] },
-    'Samurai':              { type:'Fast++',     elCount:4, elDesc:'Natural + Mystic + 3 Blood Traits',            allowedCats:['Natural','Mystic','Blood'] },
-    'Knight':               { type:'Strong+',    elCount:0, elDesc:'No Elements',                                  allowedCats:[], isKnight:true },
-    'Healer':               { type:'Sorcerer+',  elCount:2, elDesc:'Holy + Natural (restricted)',                  allowedCats:['Holy','Water','Earth','Air','Ice','Vine'] },
-    'Demonic Spiritualist': { type:'Neutral+',   elCount:3, elDesc:'Natural + Divergent + Mystic',                 allowedCats:['Natural','Divergent','Mystic'] },
-    'Mage':                 { type:'Sorcerer',   elCount:5, elDesc:'Natural + Divergent',                          allowedCats:['Natural','Divergent'] },
-    'Battle Mage':          { type:'Neutral++',  elCount:4, elDesc:'Natural + Divergent',                          allowedCats:['Natural','Divergent'] },
-    'Paladin':              { type:'Strong++',   elCount:2, elDesc:'Natural + Holy',                               allowedCats:['Natural','Holy'] },
-    'Elemental Paladin':    { type:'Strong+',    elCount:3, elDesc:'Natural + Divergent',                          allowedCats:['Natural','Divergent'] },
-    'Dark Paladin':         { type:'Strong++',   elCount:2, elDesc:'Natural + Dark',                               allowedCats:['Natural','Dark'] }
+
+    /* ── Available classes ─────────────────────── */
+
+    Archer: {
+        type:              'Fast+',
+        maxElements:       3,
+        allowedCategories: ['Natural', 'Divergent', 'Mystic'],
+        blockedElements:   [],
+        bonusCharacteristics: {},
+        elDesc: 'Choose 3 from Natural + Divergent + Mystic'
+    },
+
+    Assassin: {
+        type:              'Fast+',
+        maxElements:       2,
+        allowedCategories: ['Natural', 'Mystic'],
+        blockedElements:   [],
+        bonusCharacteristics: { Poison: 3 },
+        elDesc: 'Choose 2 from Natural + Mystic  |  +3 Poison bonus'
+    },
+
+    Berserk: {
+        type:              'Strong',
+        maxElements:       2,
+        allowedCategories: ['Natural', 'Divergent'],
+        blockedElements:   [],
+        bonusCharacteristics: { Blood: 3 },
+        elDesc: 'Choose 2 from Natural + Divergent  |  +3 Blood bonus'
+    },
+
+    'Blood Hunter': {
+        type:              'Neutral',
+        maxElements:       3,
+        allowedCategories: ['Natural', 'Divergent', 'Racial'],
+        /* Blood IS selectable; block the other Racial elements */
+        blockedElements:   ['Poison', 'Vine', 'Metal'],
+        bonusCharacteristics: {},
+        elDesc: 'Choose 3 from Natural + Divergent + Blood'
+    },
+
+    Warlock: {
+        type:              'Sorcerer-',
+        maxElements:       3,
+        allowedCategories: ['Natural', 'Racial'],
+        blockedElements:   ['Blood', 'Vine', 'Metal'],   // only Poison from Racial
+        bonusCharacteristics: {},
+        elDesc: 'Choose 3 from Natural + Poison'
+    },
+
+    Hunter: {
+        type:              'Strong+',
+        maxElements:       3,
+        allowedCategories: ['Natural', 'Divergent', 'Mystic'],
+        blockedElements:   [],
+        bonusCharacteristics: {},
+        elDesc: 'Choose 3 from Natural + Divergent + Mystic'
+    },
+
+    Tamer: {
+        type:              'Neutral+',
+        maxElements:       3,
+        allowedCategories: ['Natural', 'Divergent', 'Mystic'],
+        blockedElements:   [],
+        bonusCharacteristics: {},
+        elDesc: 'Choose 3 from Natural + Divergent + Mystic'
+    },
+
+    Duelist: {
+        type:              'Fast',
+        maxElements:       2,
+        allowedCategories: ['Natural', 'Divergent'],
+        blockedElements:   [],
+        bonusCharacteristics: {},
+        elDesc: 'Choose 2 from Natural + Divergent'
+    },
+
+    Handler: {
+        type:              'Fast',
+        maxElements:       2,
+        allowedCategories: ['Natural', 'Divergent', 'Mystic'],
+        blockedElements:   [],
+        bonusCharacteristics: {},
+        elDesc: 'Choose 2 from Natural + Divergent + Mystic'
+    },
+
+    Wielder: {
+        type:              'Fast',
+        maxElements:       3,
+        allowedCategories: ['Natural', 'Divergent', 'Mystic'],
+        blockedElements:   [],
+        bonusCharacteristics: {},
+        elDesc: 'Choose 3 from Natural + Divergent + Mystic'
+    },
+
+    Monk: {
+        type:              'Neutral',
+        maxElements:       2,
+        allowedCategories: ['Natural', 'Divergent'],
+        blockedElements:   [],
+        bonusCharacteristics: { Holy: 3 },
+        elDesc: 'Choose 2 from Natural + Divergent  |  +3 Holy bonus'
+    },
+
+    Necromancer: {
+        type:              'Sorcerer++',
+        maxElements:       3,
+        allowedCategories: ['Natural', 'Mystic'],
+        blockedElements:   ['Holy'],     // only Dark from Mystic
+        bonusCharacteristics: {},
+        elDesc: 'Choose 3 from Natural + Dark'
+    },
+
+    Sage: {
+        type:              'Sorcerer+',
+        maxElements:       3,
+        allowedCategories: ['Natural', 'Divergent', 'Racial'],
+        blockedElements:   [],
+        bonusCharacteristics: {},
+        elDesc: 'Choose 3 from Natural + Divergent + Racial'
+    },
+
+    Samurai: {
+        type:              'Fast++',
+        maxElements:       1,
+        allowedCategories: ['Natural', 'Mystic'],
+        blockedElements:   ['Dark'],     // only Holy from Mystic? spec says Natural+Mystic
+        bonusCharacteristics: { Blood: 3 },
+        elDesc: 'Choose 1 from Natural + Mystic  |  +3 Blood bonus'
+    },
+
+    /* ── Extended classes ──────────────────────── */
+
+    Knight: {
+        type:              'Strong+',
+        isKnight:          true,
+        maxElements:       0,
+        allowedCategories: [],
+        blockedElements:   [],
+        bonusCharacteristics: {},
+        elDesc: 'No elemental selection'
+    },
+
+    Healer: {
+        type:              'Sorcerer+',
+        maxElements:       2,
+        allowedCategories: ['Natural', 'Divergent', 'Mystic'],
+        /*
+         * Natural allowed EXCEPT Fire.
+         * Divergent allowed EXCEPT Lightning.
+         * Only Holy from Mystic (block Dark).
+         * Blood and Poison never available.
+         */
+        blockedElements:   ['Fire', 'Lightning', 'Dark', 'Blood', 'Poison', 'Vine', 'Metal'],
+        bonusCharacteristics: {},
+        elDesc: 'Choose 2 — Holy / Natural (no Fire) / Divergent (no Lightning)'
+    },
+
+    'Demonic Spiritualist': {
+        type:              'Neutral+',
+        maxElements:       3,
+        allowedCategories: ['Natural', 'Divergent', 'Mystic'],
+        blockedElements:   [],
+        bonusCharacteristics: {},
+        elDesc: 'Choose 3 from Natural + Divergent + Mystic'
+    },
+
+    Mage: {
+        type:              'Sorcerer',
+        maxElements:       5,
+        allowedCategories: ['Natural', 'Divergent'],
+        blockedElements:   [],
+        bonusCharacteristics: {},
+        elDesc: 'Choose 5 from Natural + Divergent'
+    },
+
+    'Battle Mage': {
+        type:              'Neutral++',
+        maxElements:       4,
+        allowedCategories: ['Natural', 'Divergent'],
+        blockedElements:   [],
+        bonusCharacteristics: {},
+        elDesc: 'Choose 4 from Natural + Divergent'
+    },
+
+    Paladin: {
+        type:              'Strong++',
+        maxElements:       2,
+        allowedCategories: ['Natural', 'Mystic'],
+        blockedElements:   ['Dark'],     // only Holy from Mystic
+        bonusCharacteristics: {},
+        elDesc: 'Choose 2 from Natural + Holy'
+    },
+
+    'Elemental Paladin': {
+        type:              'Strong+',
+        maxElements:       3,
+        allowedCategories: ['Natural', 'Divergent'],
+        blockedElements:   [],
+        bonusCharacteristics: {},
+        elDesc: 'Choose 3 from Natural + Divergent'
+    },
+
+    'Dark Paladin': {
+        type:              'Strong++',
+        maxElements:       2,
+        allowedCategories: ['Natural', 'Mystic'],
+        blockedElements:   ['Holy'],     // only Dark from Mystic
+        bonusCharacteristics: {},
+        elDesc: 'Choose 2 from Natural + Dark'
+    }
 };
 
 /* ─── Get CLASS_DATA entry for the currently selected class ─── */
@@ -139,7 +382,7 @@ export function getClassDef() {
     return (el && el.value) ? (CLASS_DATA[el.value] || null) : null;
 }
 
-/* ─── Get effective type data (Knight receives merged overrides) ─── */
+/* ─── Effective type (Knight merges overrides) ─── */
 export function getEffectiveType() {
     const cd = getClassDef();
     if (!cd) return null;
@@ -154,15 +397,15 @@ export function applyClassData() {
     const td = getEffectiveType();
 
     if (!cd || !td) {
-        ['classType','classTypeBonus','elementCount'].forEach(id => sf(id, ''));
-        ['classRollBonuses','classElements','classBaseAtk','classBaseReflex']
+        ['classType', 'classTypeBonus', 'elementCount'].forEach(id => sf(id, ''));
+        ['classRollBonuses', 'classElements', 'classBaseAtk', 'classBaseReflex']
             .forEach(id => setInfoText(id, '—'));
         showClassInfoBar(false);
         return;
     }
 
     sf('classType',    cd.type);
-    sf('elementCount', cd.elCount);
+    sf('elementCount', cd.maxElements);
 
     const parts = [];
     if (td.move       > 0) parts.push('Move +'  + td.move);
@@ -172,13 +415,13 @@ export function applyClassData() {
 
     sf('classTypeBonus', bonusStr);
     setInfoText('classRollBonuses', bonusStr);
-    setInfoText('classElements',    cd.elDesc   || '—');
+    setInfoText('classElements',    cd.elDesc        || '—');
     setInfoText('classBaseAtk',     String(td.baseAtk));
     setInfoText('classBaseReflex',  String(td.baseReflex));
 
     showClassInfoBar(true);
 
-    ['classType','classTypeBonus','elementCount'].forEach(flashField);
+    ['classType', 'classTypeBonus', 'elementCount'].forEach(flashField);
 }
 
 /* ─── Initialize class dropdown listener ─── */

@@ -285,3 +285,118 @@ body.body-scroll::-webkit-scrollbar{width:7px}
 body.body-scroll::-webkit-scrollbar-track{background:rgba(190,177,145,.5)}
 body.body-scroll::-webkit-scrollbar-thumb{background:rgba(74,47,24,.2);border-radius:4px}
 body.body-scroll::-webkit-scrollbar-thumb:hover{background:rgba(74,47,24,.35)}
+
+/* ═══════════════════════════════════════════════════
+   ELEMENT SYSTEM — Separated Cost Labels
+   upgradeCost (grade consumption) vs spellCost (mana)
+═══════════════════════════════════════════════════ */
+
+/* Upgrade cost label — shown next to each tier button */
+.elem-tier-upgrade-cost {
+    font-family: 'Cinzel', serif;
+    font-size: .58rem;
+    font-weight: 700;
+    color: #cc9f38;
+    opacity: .75;
+    min-width: 28px;
+    text-align: center;
+    letter-spacing: .03em;
+}
+
+/* Spell cost label — mana consumed when casting */
+.elem-tier-spell-cost {
+    font-family: 'Cinzel', serif;
+    font-size: .58rem;
+    font-weight: 600;
+    color: #2b5a8b;
+    opacity: .6;
+    min-width: 28px;
+    text-align: center;
+    letter-spacing: .03em;
+}
+
+.elem-tier-spell-cost.cost-active {
+    opacity: 1;
+    color: #2b5a8b;
+}
+
+/* Tier row: three items side by side */
+.elem-tier-row {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+}
+
+/* ── Bonus Characteristic Section ── */
+
+.elem-bonus-section {
+    margin-top: 1.2rem;
+    padding: .8rem .6rem .6rem;
+    border: 1px dashed rgba(74,47,24,.14);
+    border-radius: 4px;
+    background: rgba(190,177,145,.1);
+}
+
+.elem-bonus-header {
+    margin-bottom: .6rem;
+}
+
+.elem-bonus-slot {
+    margin-bottom: .7rem;
+    border-color: rgba(204,159,56,.18);
+}
+
+.elem-bonus-slot-header {
+    gap: .4rem;
+    flex-wrap: wrap;
+}
+
+.elem-bonus-name {
+    flex: 1;
+    min-width: 120px;
+    padding: .3rem .45rem !important;
+    font-size: .85rem !important;
+}
+
+.elem-bonus-details {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: .5rem;
+    padding: .35rem .8rem .45rem;
+    border-top: 1px solid rgba(74,47,24,.06);
+    background: rgba(190,177,145,.08);
+}
+
+.elem-bonus-type {
+    padding: .28rem .4rem !important;
+    font-size: .82rem !important;
+}
+
+.elem-bonus-grade {
+    width: 72px !important;
+    padding: .28rem .35rem !important;
+    font-size: .82rem !important;
+    text-align: center;
+}
+
+/* ── Responsive tweaks for new labels ── */
+@media (max-width: 480px) {
+    .elem-tier-row {
+        flex-wrap: wrap;
+        gap: .18rem;
+    }
+
+    .elem-tier-upgrade-cost,
+    .elem-tier-spell-cost {
+        font-size: .54rem;
+        min-width: 22px;
+    }
+
+    .elem-bonus-details {
+        grid-template-columns: 1fr;
+    }
+
+    .elem-bonus-grade {
+        width: 100% !important;
+    }
+}

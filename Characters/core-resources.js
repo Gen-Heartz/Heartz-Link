@@ -68,19 +68,19 @@ export function calcMaxMana() {
 }
 
 /*
- * Combat Points (no level scaling — fixed cpBase)
- * = (DodgeTotal × 1.3)
- *   + (CombatTotal × 1.7)
- *   + (MysticTotal × 1.2)
+ * Combat Points (no level scaling — fixed cpBase - dividido pela metade o valor que cada pericia contribui)
+ * = (DodgeTotal × 0.65)
+ *   + (CombatTotal × 0.85)
+ *   + (MysticTotal × 0.6)
  *   + cpBase
  */
 export function calcMaxCombatPoints() {
     const td  = getEffectiveType();
     const cpB = td ? td.cpBase : 0;
     return Math.floor(
-        getSkillTotal('dodge')  * 1.3 +
-        getSkillTotal('combat') * 1.7 +
-        getSkillTotal('mystic') * 1.2 +
+        getSkillTotal('dodge')  * 0.65 +
+        getSkillTotal('combat') * 0.85 +
+        getSkillTotal('mystic') * 0.6 +
         cpB
     );
 }
