@@ -196,7 +196,7 @@ export const CLASS_DATA = {
 
     'Blood Hunter': {
         type:              'Neutral',
-        maxElements:       3,
+        maxElements:       4,
         allowedCategories: ['Natural', 'Divergent', 'Racial'],
         /* Blood IS selectable; block the other Racial elements */
         blockedElements:   ['Poison', 'Vine', 'Metal'],
@@ -233,7 +233,7 @@ export const CLASS_DATA = {
 
     Duelist: {
         type:              'Fast',
-        maxElements:       2,
+        maxElements:       3,
         allowedCategories: ['Natural', 'Divergent'],
         blockedElements:   [],
         bonusCharacteristics: {},

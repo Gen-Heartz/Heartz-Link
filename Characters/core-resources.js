@@ -101,30 +101,30 @@ export function calcMaxSanity() {
 export function calcProficiency() {
     const td = getEffectiveType();
     const ba = td ? td.baseAtk : 0;
-    return parseFloat((ba + getSkillTotal('combat') * 0.7).toFixed(2));
+    return parseFloat((ba + getSkillTotal('combat') * 0.7).toFixed(2) + (getSkillTotal('Agility') * 0.3));
 }
 
 // Reflex = baseReflex + dodgeTotal
 export function calcReflex() {
     const td = getEffectiveType();
     const br = td ? td.baseReflex : 0;
-    return br + getSkillTotal('dodge');
+    return br + getSkillTotal('dodge') + (getSkillTotal('Agility') * 0.5);
 }
 
-// Phys/Crit Damage = ((atkBonus × level) / 2) + (strengthTotal / 2)
+// Phys/Crit Damage = ((atkBonus × level) / 2) + (strengthTotal * 1.8)
 export function calcPhysCritDamage() {
     const td  = getEffectiveType();
     const lv  = Math.max(1, nv('level'));
     const atk = td ? td.atkBonus : 0;
-    return parseFloat(((atk * lv) / 2 + getSkillTotal('strength') / 2).toFixed(2));
+    return parseFloat(((atk * lv) / 2 + getSkillTotal('strength') * 1.8).toFixed(2));
 }
 
-// Magical Damage = ((magicBonus × level) / 2) + (impactTotal / 2)
+// Magical Damage = ((magicBonus × level) / 2) + (impactTotal * 2.4)
 export function calcMagicalDamage() {
     const td = getEffectiveType();
     const lv = Math.max(1, nv('level'));
     const mg = td ? td.magicBonus : 0;
-    return parseFloat(((mg * lv) / 2 + getSkillTotal('impact') / 2).toFixed(2));
+    return parseFloat(((mg * lv) / 2 + getSkillTotal('impact') * 2.4).toFixed(2));
 }
 
 // Enchantment = enchBase + (craftingTotal × 0.7)

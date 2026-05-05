@@ -229,7 +229,7 @@ body::after {
     border: 1.5px solid rgba(74, 47, 24, 0.2);
     border-radius: 4px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     font-family: 'Cinzel', serif;
     font-size: 0.9rem;
     font-weight: 600;

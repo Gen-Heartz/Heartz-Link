@@ -23,19 +23,19 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 
 .back-nav{text-align:left;margin-bottom:1rem}
 .back-btn{display:inline-flex;align-items:center;gap:.4rem;background:none;border:none;cursor:pointer;font-family:'Cinzel',serif;font-size:.85rem;font-weight:600;color:#4a2f18;opacity:.6;letter-spacing:.08em;text-transform:uppercase;transition:all .3s ease;padding:.3rem 0}
-.back-btn:hover{opacity:1;color:#cc9f38}
+.back-btn:hover{opacity:1;color:#4a2f18}
 .back-arrow{font-size:1.1rem;transition:transform .3s ease}
 .back-btn:hover .back-arrow{transform:translateX(-3px)}
 
 .divider{display:flex;align-items:center;justify-content:center;gap:1rem;margin:1.5rem auto;max-width:400px}
 .divider-bottom{margin-top:2.5rem}
 .divider-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,#4a2f18,transparent);opacity:.4}
-.divider-diamond{width:8px;height:8px;background-color:#cc9f38;transform:rotate(45deg);flex-shrink:0;opacity:.7}
+.divider-diamond{width:8px;height:8px;background-color:#4a2f18;transform:rotate(45deg);flex-shrink:0;opacity:.7}
 
 .title-section{margin-bottom:1rem}
 .main-title{font-family:'Cinzel Decorative','Cinzel',serif;font-size:3.8rem;font-weight:900;color:#4a2f18;letter-spacing:.08em;line-height:1.1;text-shadow:0 1px 0 rgba(190,177,145,.8),0 2px 4px rgba(74,47,24,.1);margin-bottom:.3rem}
 .main-title-sm{font-size:2.6rem}
-.title-heart{color:#cc9f38;display:inline-block}
+.title-heart{color:#4a2f18;display:inline-block}
 .subtitle{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:400;color:#4a2f18;opacity:.6;letter-spacing:.35em;text-transform:uppercase;margin-top:.5rem}
 
 .emblem{margin:2rem auto 2.5rem;width:60px;height:60px}
@@ -49,8 +49,8 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 .nav-btn::before{content:'';position:absolute;inset:0;border-radius:3px;background:linear-gradient(180deg,rgba(255,255,255,.06) 0%,transparent 50%,rgba(74,47,24,.03) 100%);pointer-events:none}
 .nav-btn:hover{border-color:rgba(204,159,56,.6);background:linear-gradient(135deg,rgba(204,159,56,.15) 0%,rgba(204,159,56,.08) 50%,rgba(204,159,56,.15) 100%);box-shadow:0 2px 8px rgba(74,47,24,.12),inset 0 1px 0 rgba(255,255,255,.2);transform:translateY(-1px)}
 .nav-btn:active{transform:translateY(0)}
-.nav-btn:hover .btn-icon{color:#cc9f38;transform:scale(1.1)}
-.nav-btn:focus-visible{outline:2px solid #cc9f38;outline-offset:2px}
+.nav-btn:hover .btn-icon{color:#4a2f18;transform:scale(1.1)}
+.nav-btn:focus-visible{outline:2px solid #4a2f18;outline-offset:2px}
 .btn-icon{font-size:1.4rem;color:#4a2f18;opacity:.7;transition:all .3s ease;line-height:1}
 .footer-note{font-family:'Cormorant Garamond',serif;font-size:.85rem;font-style:italic;color:#4a2f18;opacity:.35;letter-spacing:.05em}
 
@@ -59,10 +59,10 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 .sheet-section{margin-bottom:1.8rem;padding:1.4rem;background:linear-gradient(135deg,rgba(190,177,145,.35) 0%,rgba(200,188,158,.2) 50%,rgba(190,177,145,.35) 100%);border:1px solid rgba(74,47,24,.12);border-radius:4px;box-shadow:0 1px 4px rgba(74,47,24,.06)}
 .section-header{margin-bottom:1rem}
 .section-title{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:700;color:#4a2f18;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.35rem}
-.section-line{height:1px;background:linear-gradient(90deg,#cc9f38,rgba(74,47,24,.2),transparent);opacity:.6}
+.section-line{height:1px;background:linear-gradient(90deg,#4a2f18,rgba(74,47,24,.2),transparent);opacity:.6}
 .section-subheader{display:flex;align-items:center;gap:.6rem;margin:1rem 0 .6rem}
 .subheader-label{font-family:'Cinzel',serif;font-size:.75rem;font-weight:700;color:#4a2f18;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
-.subheader-note{font-family:'Cormorant Garamond',serif;font-size:.8rem;font-style:italic;color:#cc9f38;opacity:.8}
+.subheader-note{font-family:'Cormorant Garamond',serif;font-size:.8rem;font-style:italic;color:#4a2f18;opacity:.8}
 
 .field-row{display:grid;gap:.75rem;margin-bottom:.75rem}
 .field-row:last-child{margin-bottom:0}
@@ -70,10 +70,10 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 
 .field-group{display:flex;flex-direction:column;gap:.22rem}
 .field-label{font-family:'Cinzel',serif;font-size:.68rem;font-weight:600;color:#4a2f18;letter-spacing:.07em;text-transform:uppercase;opacity:.72;line-height:1.2}
-.field-label-header{font-size:.74rem;font-weight:700;color:#cc9f38;opacity:1}
+.field-label-header{font-size:.74rem;font-weight:700;color:#4a2f18;opacity:1}
 .field-label-resource{font-size:.72rem;font-weight:700;opacity:.85;text-align:center}
 .field-label-adjust{font-size:.62rem;opacity:.55;text-align:center}
-.total-label{font-size:.62rem;color:#cc9f38;opacity:.8}
+.total-label{font-size:.62rem;color:#4a2f18;opacity:.8}
 
 .field-input{width:100%;padding:.48rem .6rem;font-family:'Cormorant Garamond',serif;font-size:.93rem;font-weight:500;color:#4a2f18;background:linear-gradient(180deg,rgba(255,255,255,.12) 0%,rgba(190,177,145,.15) 100%);border:1px solid rgba(74,47,24,.18);border-radius:3px;outline:none;transition:border-color .25s ease,box-shadow .25s ease,background .25s ease;box-shadow:inset 0 1px 2px rgba(74,47,24,.04)}
 .field-input::placeholder{color:#4a2f18;opacity:.28;font-style:italic}
@@ -112,14 +112,14 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 .adjust-wrapper{display:flex;align-items:stretch;gap:0}
 .adjust-wrapper .field-adjust{border-top-right-radius:0;border-bottom-right-radius:0;border-right:none;flex:1;font-size:.85rem;padding:.32rem .38rem}
 .adjust-btn{display:flex;align-items:center;justify-content:center;width:30px;min-width:30px;background:linear-gradient(180deg,rgba(204,159,56,.16) 0%,rgba(204,159,56,.08) 100%);border:1px solid rgba(74,47,24,.18);border-left:none;border-top-right-radius:3px;border-bottom-right-radius:3px;cursor:pointer;font-size:.8rem;color:#4a2f18;opacity:.6;transition:all .25s ease;padding:0;line-height:1}
-.adjust-btn:hover{opacity:1;background:rgba(204,159,56,.28);color:#cc9f38}
+.adjust-btn:hover{opacity:1;background:rgba(204,159,56,.28);color:#4a2f18}
 .adjust-btn:active{transform:scale(.93)}
 
 .class-info-bar{display:flex;flex-wrap:wrap;gap:.8rem 1.4rem;padding:0;margin-top:.6rem;background:linear-gradient(135deg,rgba(204,159,56,.08) 0%,rgba(204,159,56,.04) 100%);border:1px dashed rgba(204,159,56,.24);border-radius:3px;opacity:0;max-height:0;overflow:hidden;transition:opacity .35s ease,max-height .35s ease,padding .35s ease}
 .class-info-bar.visible{opacity:1;max-height:100px;padding:.7rem .9rem}
 .class-info-item{display:flex;align-items:center;gap:.35rem}
 .info-label{font-family:'Cinzel',serif;font-size:.66rem;font-weight:600;color:#4a2f18;letter-spacing:.06em;text-transform:uppercase;opacity:.55}
-.info-value{font-family:'Cormorant Garamond',serif;font-size:.9rem;font-weight:600;color:#cc9f38}
+.info-value{font-family:'Cormorant Garamond',serif;font-size:.9rem;font-weight:600;color:#4a2f18}
 
 /* ═══ SKILL POINTS ═══ */
 .sp-banner{display:flex;gap:0;margin-bottom:.9rem;border:1px solid rgba(74,47,24,.14);border-radius:3px;overflow:hidden}
@@ -133,7 +133,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 
 .skill-block{position:relative;margin-bottom:.9rem;padding:.85rem .65rem .65rem;border:1px solid rgba(74,47,24,.09);border-radius:3px;background:rgba(190,177,145,.14)}
 .skill-block:last-child{margin-bottom:0}
-.skill-block-tag{position:absolute;top:-.52rem;left:.75rem;font-family:'Cinzel',serif;font-size:.6rem;font-weight:700;color:#cc9f38;letter-spacing:.11em;text-transform:uppercase;background:#beb191;padding:0 .38rem;opacity:.75}
+.skill-block-tag{position:absolute;top:-.52rem;left:.75rem;font-family:'Cinzel',serif;font-size:.6rem;font-weight:700;color:#4a2f18;letter-spacing:.11em;text-transform:uppercase;background:#beb191;padding:0 .38rem;opacity:.75}
 
 /* ═══ FORM ACTIONS ═══ */
 .form-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:2rem;max-width:480px;margin-left:auto;margin-right:auto}
@@ -181,7 +181,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 /* ═══ TOAST ═══ */
 .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);display:flex;align-items:center;gap:.55rem;padding:.75rem 1.4rem;background-color:#beb191;border:1.5px solid rgba(204,159,56,.5);border-radius:4px;box-shadow:0 4px 16px rgba(74,47,24,.15);z-index:300;opacity:0;transition:all .4s ease;pointer-events:none}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.toast-icon{font-size:1.05rem;color:#cc9f38}
+.toast-icon{font-size:1.05rem;color:#4a2f18}
 .toast-text{font-family:'Cinzel',serif;font-size:.78rem;font-weight:600;color:#4a2f18;letter-spacing:.06em}
 
 .field-flash{animation:fieldFlash .55s ease}
@@ -206,14 +206,14 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 /* Slot header */
 .elem-slot-header{display:flex;align-items:center;gap:.6rem;padding:.7rem .8rem;cursor:pointer;transition:background .25s ease;user-select:none;-webkit-user-select:none}
 .elem-slot-header:hover{background:rgba(204,159,56,.06)}
-.elem-slot-number{font-family:'Cinzel',serif;font-size:.65rem;font-weight:700;color:#cc9f38;opacity:.7;min-width:16px}
+.elem-slot-number{font-family:'Cinzel',serif;font-size:.65rem;font-weight:700;color:#4a2f18;opacity:.7;min-width:16px}
 .elem-slot-select{flex:1}
 .elem-slot-select select{width:100%;padding:.35rem .5rem;font-family:'Cormorant Garamond',serif;font-size:.88rem;font-weight:600;color:#4a2f18;background:linear-gradient(180deg,rgba(255,255,255,.1) 0%,rgba(190,177,145,.12) 100%);border:1px solid rgba(74,47,24,.15);border-radius:3px;outline:none;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%234a2f18' stroke-width='1.2' fill='none' opacity='.4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .45rem center;padding-right:1.6rem;transition:border-color .25s ease}
 .elem-slot-select select:focus{border-color:rgba(204,159,56,.5)}
 .elem-slot-select select option{background-color:#beb191;color:#4a2f18}
 .elem-slot-chevron{font-size:.7rem;color:#4a2f18;opacity:.4;transition:transform .3s ease;width:16px;text-align:center}
 .elem-slot.open .elem-slot-chevron{transform:rotate(180deg)}
-.elem-slot-cost{font-family:'Cinzel',serif;font-size:.7rem;font-weight:700;color:#cc9f38;opacity:.8;min-width:40px;text-align:right}
+.elem-slot-cost{font-family:'Cinzel',serif;font-size:.7rem;font-weight:700;color:#4a2f18;opacity:.8;min-width:40px;text-align:right}
 
 /* Traits panel — collapsible */
 .elem-traits-panel{max-height:0;overflow:hidden;transition:max-height .4s ease}
@@ -228,7 +228,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 .elem-trait-info{display:flex;flex-direction:column;gap:.15rem;min-width:0}
 .elem-trait-name{font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;color:#4a2f18;letter-spacing:.04em}
 .elem-trait-type{font-family:'Cormorant Garamond',serif;font-size:.76rem;font-style:italic;color:#4a2f18;opacity:.55}
-.elem-trait-grade{font-family:'Cinzel',serif;font-size:.58rem;font-weight:600;color:#cc9f38;opacity:.7;letter-spacing:.08em;text-transform:uppercase}
+.elem-trait-grade{font-family:'Cinzel',serif;font-size:.58rem;font-weight:600;color:#4a2f18;opacity:.7;letter-spacing:.08em;text-transform:uppercase}
 
 /* Quality tier selector */
 .elem-trait-tiers{display:flex;flex-direction:column;align-items:flex-end;gap:.2rem;padding-top:.1rem}
@@ -241,7 +241,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 .elem-tier-btn.tier-locked{opacity:.3;cursor:default;pointer-events:none}
 
 .elem-tier-cost{font-family:'Cinzel',serif;font-size:.6rem;font-weight:700;color:#4a2f18;opacity:.5;min-width:20px;text-align:center}
-.elem-tier-cost.cost-active{color:#cc9f38;opacity:1}
+.elem-tier-cost.cost-active{color:#4a2f18;opacity:1}
 
 /* Quality labels coloring */
 .tier-common .elem-tier-btn.tier-active{background:linear-gradient(180deg,rgba(120,120,100,.18) 0%,rgba(120,120,100,.1) 100%);border-color:rgba(120,120,100,.4)}
@@ -296,7 +296,7 @@ body.body-scroll::-webkit-scrollbar-thumb:hover{background:rgba(74,47,24,.35)}
     font-family: 'Cinzel', serif;
     font-size: .58rem;
     font-weight: 700;
-    color: #cc9f38;
+    color: #4a2f18;
     opacity: .75;
     min-width: 28px;
     text-align: center;

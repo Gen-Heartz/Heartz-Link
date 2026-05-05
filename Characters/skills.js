@@ -21,7 +21,7 @@ function sf(id, v) { const el = $(id); if (el) el.value = v; }
 function sh(id, t) { const el = $(id); if (el) el.textContent = t; }
 
 /* ─── Skill point rate ─── */
-export const SP_PER_LEVEL = 4.5;
+export const SP_PER_LEVEL = 4.7;
 
 /* ─── Skill → attribute → total map ─── */
 export const SKILL_MAP = [
