@@ -14,7 +14,7 @@ var ROUTES = {
     'monsters-by-region': 'MonstersByRegion.html'
 };
 
-var HOME_PATH = '../home/Home.html';
+var HOME_PATH = '../home/index.html';
 
 function initNavigation() {
     document.querySelectorAll('.nav-btn[data-page]').forEach(function (btn) {
