@@ -26,6 +26,7 @@ export const ELEMENT_CATEGORIES = {
     Natural:   ['Fire', 'Water', 'Earth', 'Air'],
     Divergent: ['Lightning', 'Ice', 'Gravity', 'Sound'],
     Racial:    ['Blood', 'Poison', 'Vine', 'Metal'],
+    Extra:     ['Sand', 'Eter', 'Crystal', 'Magnet'], // not used in class progression
     Mystic:    ['Holy', 'Dark']
 };
 
