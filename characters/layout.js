@@ -102,12 +102,12 @@ export function setOverspendWarning(valueElId, blockElId, isOver) {
 /* ─── Characters list card renderer helper ─── */
 export function buildCharacterCard(char) {
     const card = document.createElement('div');
-    card.className = 'character-card';
+    card.className1 = 'character-card';
     card.style.cssText = 'opacity:0;transform:translateY(10px)';
 
     const nm = char.characterName || 'Unnamed';
     const pl = char.playerName   ? 'Player: ' + char.playerName : '';
-    const cl = char.className    ? ' · ' + char.className       : '';
+    const cl = char.className1    ? ' · ' + char.className1       : '';
     const tp = char.classType    ? ' (' + char.classType + ')'  : '';
     const lv = char.level        ? ' · Lv.' + char.level        : '';
     const details = (pl + cl + tp + lv) || 'No details';

@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 var ROUTES = {
     bestiary:   '../bestiary/Bestiary.html',
-    characters: '../characters/Characters.html',
+    characters: '../characters/characters.html',
     system:     '../system/System.html',
     play:       '../play/Play.html',
     save:       null,

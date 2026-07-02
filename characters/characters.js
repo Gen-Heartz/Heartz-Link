@@ -40,7 +40,7 @@ import {
 
 import {
     applyClassData,
-    getClassDef,
+    getClassDefs,
     initClassProgression
 } from './class-progression.js';
 
@@ -233,11 +233,16 @@ function saveCharacter() {
    LOAD CHARACTER INTO FORM
 ═══════════════════════════════════════ */
 function loadCharacterIntoForm(char) {
-    // 1. Set class field first so slot render knows which class
-    const classEl = $('className');
-    if (classEl && char.className) classEl.value = char.className;
+    // 1. Set class fields first so slot render knows which classes are active
+    const classEl1 = $('className1'); // Ou o seletor correto do seu projeto, ex: $('#className1')
+    const classEl2 = $('className2');
 
-    // 2. Render slots for this class
+    if (classEl1 && char.className1) classEl1.value = char.className1;
+    if (classEl2 && char.className2) classEl2.value = char.className2;
+
+    // 2. Render slots for these classes
+    // NOTA: Se a função renderElementSlots dependia de 'char.className', 
+    // você precisará atualizar a lógica interna dela para ler className1 e className2.
     renderElementSlots();
 
     // 3. Populate all standard fields
@@ -257,7 +262,7 @@ function loadCharacterIntoForm(char) {
 
     // 6. Trigger class info bar + full recalc
     setTimeout(() => {
-        applyClassData();
+        applyClassData(); // Esta função também precisará ler ambas as classes agora
         recalcAll();
     }, 60);
 }

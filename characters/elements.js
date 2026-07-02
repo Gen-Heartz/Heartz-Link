@@ -250,12 +250,9 @@ function traitKey(slot, elem, traitName) {
 
 /* ═══════════════════════════════════════════════════
    AVAILABLE ELEMENTS RESOLVER
-   Reads allowedCategories + blockedElements from
-   the current class definition.
-   Returns a sorted array of selectable element names.
 ═══════════════════════════════════════════════════ */
 export function getAvailableElements() {
-    const el  = $('className');
+    const el  = $('className1');
     const key = el && el.value ? el.value : '';
     const cd  = CLASS_DATA[key];
     if (!cd) return [];
@@ -437,16 +434,13 @@ function _renderTraitsForSlot(slotEl, slotIdx, elemName) {
 
 /* ═══════════════════════════════════════════════════
    SLOT CONTAINER RENDERER
-   Hard-enforces maxElements from CLASS_DATA.
-   bonusCharacteristics are passed to bonus slots,
-   NOT added to main element selection.
 ═══════════════════════════════════════════════════ */
 export function renderElementSlots() {
     const container = $('elementSlotsContainer');
     if (!container) return;
     container.innerHTML = '';
 
-    const classEl   = $('className');
+    const classEl   = $('className1');
     const className = classEl ? classEl.value : '';
     const cd        = CLASS_DATA[className];
 
@@ -595,11 +589,10 @@ function _updateAllSelectDisabledOptions(container, maxSlots) {
     container
         .querySelectorAll('.elem-slot:not(.elem-bonus-slot) select')
         .forEach(sel => {
-            /* Update dataset.prevValue for change-event guard */
             sel.dataset.prevValue = sel.value;
 
             sel.querySelectorAll('option').forEach(opt => {
-                if (!opt.value) return;   // keep the placeholder
+                if (!opt.value) return;
                 opt.disabled = chosen.includes(opt.value) && opt.value !== sel.value;
             });
         });
@@ -607,14 +600,8 @@ function _updateAllSelectDisabledOptions(container, maxSlots) {
 
 /* ═══════════════════════════════════════════════════
    BONUS CHARACTERISTIC SLOTS
-   Driven by bonusCharacteristics map:
-   { ElementName: count } → pre-labels the bonus slots
-   with the element name and forces their traits to
-   come from that element's DB only.
-   These are NEVER added to main element selection.
 ═══════════════════════════════════════════════════ */
 function _renderBonusSlots(container, bonusMap) {
-    /* bonusMap example: { Poison: 3 } or { Blood: 3 } or {} */
     const bonusEntries = [];
 
     Object.entries(bonusMap).forEach(([elemName, count]) => {
@@ -623,7 +610,6 @@ function _renderBonusSlots(container, bonusMap) {
         }
     });
 
-    /* If no bonus characteristics defined by class, still show 3 free slots */
     const freeCount = BONUS_COUNT - bonusEntries.length;
 
     const wrapper = document.createElement('div');
@@ -639,7 +625,7 @@ function _renderBonusSlots(container, bonusMap) {
         </span>`;
     wrapper.appendChild(hdr);
 
-    /* Locked bonus slots (from class rule e.g. Poison x3) */
+    /* Locked bonus slots */
     bonusEntries.forEach((elemName, bi) => {
         const saved  = _bonusState[bi] || { name:'', type:'', grade:0, currentTier:-1 };
         const slotEl = _buildLockedBonusSlot(bi, elemName, saved);
@@ -657,13 +643,12 @@ function _renderBonusSlots(container, bonusMap) {
     container.appendChild(wrapper);
 }
 
-/* ─── Locked bonus slot (element fixed by class rule) ─── */
+/* ─── Locked bonus slot ─── */
 function _buildLockedBonusSlot(bi, elemName, saved) {
     const slot = document.createElement('div');
     slot.className     = 'elem-slot elem-bonus-slot';
     slot.dataset.bonus = bi;
 
-    /* Header */
     const header = document.createElement('div');
     header.className = 'elem-slot-header elem-bonus-slot-header';
 
@@ -693,7 +678,6 @@ function _buildLockedBonusSlot(bi, elemName, saved) {
     header.appendChild(costBadge);
     header.appendChild(chev);
 
-    /* Detail: name input (free-form label) + grade */
     const detailRow = document.createElement('div');
     detailRow.className = 'elem-bonus-details';
 
@@ -716,7 +700,6 @@ function _buildLockedBonusSlot(bi, elemName, saved) {
     detailRow.appendChild(nameInput);
     detailRow.appendChild(gradeInput);
 
-    /* Traits panel — uses the locked element's DB traits */
     const panel = document.createElement('div');
     panel.className = 'elem-traits-panel';
     panel.id        = `bonusPanel_${bi}`;
@@ -724,7 +707,6 @@ function _buildLockedBonusSlot(bi, elemName, saved) {
     const inner = document.createElement('div');
     inner.className = 'elem-traits-inner';
 
-    /* Render element DB traits for this bonus element */
     const elemTraits = ELEM_DB[elemName] || [];
     const sorted     = [...elemTraits].sort((a,b) => a.grade - b.grade || a.name.localeCompare(b.name));
 
@@ -740,7 +722,6 @@ function _buildLockedBonusSlot(bi, elemName, saved) {
                     if (newTier === -1) { delete _traitState[key]; }
                     else { _traitState[key] = newTier; }
                     saveTraitState();
-                    /* Re-render this inner panel */
                     inner.innerHTML = '';
                     sorted.forEach(t => {
                         const k2   = `bonus_${bi}:${elemName}:${t.name}`;
@@ -771,7 +752,7 @@ function _buildLockedBonusSlot(bi, elemName, saved) {
     return slot;
 }
 
-/* ─── Free bonus slot (no class-locked element) ─── */
+/* ─── Free bonus slot ─── */
 function _buildFreeBonusSlot(bi, saved) {
     const slot = document.createElement('div');
     slot.className     = 'elem-slot elem-bonus-slot';
@@ -964,7 +945,7 @@ export function restoreElementSlots(savedSelections) {
         });
 
     /* Re-disable duplicates after restore */
-    const classEl   = $('className');
+    const classEl   = $('className1');
     const className = classEl ? classEl.value : '';
     const cd        = CLASS_DATA[className];
     if (cd) _updateAllSelectDisabledOptions(container, cd.maxElements || 0);

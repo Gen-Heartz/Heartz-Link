@@ -15,7 +15,7 @@ function nv(id) { const e=$(id); return e ? (parseFloat(e.value)||0) : 0; }
 /* ─── All personal field IDs (non-calculated) ─── */
 export const DETAIL_FIELD_IDS = [
     'characterName', 'playerName',
-    'className', 'classType', 'level', 'characterExp',
+    'className1','className2' , 'classType', 'level', 'characterExp',
     'race', 'raceBonus', 'raceSanity', 'classSanity',
     'talents', 'traumas', 'languages',
     'armorName', 'sword1Name', 'sword2Name',
