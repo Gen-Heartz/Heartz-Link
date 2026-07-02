@@ -378,8 +378,6 @@ export const CLASS_DATA = {
 
     'Son of Shadow': {
         type: ['Neutral++', 'Strong+'],
-        allowedCategories: ['Natural', 'Mystic'],
-        blockedElements: ['Holy'],     // only Dark from Mystic
         bonusCharacteristics: {},
     },
 
@@ -391,8 +389,17 @@ export const CLASS_DATA = {
     'Trevor Heartz': {
         type: ['Fast++', 'Fast++'],
         bonusCharacteristics: {},
-    }
+    },
 
+    'Sun Soldier': {
+        type: ['Strong++', 'Neutral++'],
+        bonusCharacteristics: {},
+    },
+
+    'Mantra': {
+        type: ['Neutral++', 'Strong+'],
+        bonusCharacteristics: {},
+    }
 };
 
 /* ─── Retorna um Array com as definições de todas as classes selecionadas ─── */
